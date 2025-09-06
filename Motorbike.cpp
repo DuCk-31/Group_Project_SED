@@ -63,9 +63,8 @@ string Motorbike::showMotorbike()
     return brand + " " + model + "  Engine size: " + engineSize + "\n";
 }
 
-void Motorbike::editMotorbike()
-{
-    int choice;
+void Motorbike::editMotorbike(){
+    string choiceStr;
     cout << "What do you want to update: " << endl;
     cout << "1. Brand" << endl;
     cout << "2. Model" << endl;
@@ -74,68 +73,56 @@ void Motorbike::editMotorbike()
     cout << "5. Year made" << endl;
     cout << "6. License plate" << endl;
 
-    cout << "Enter your choice: ";
-    cin >> choice;
-    while (choice < 1 || choice > 6)
-    {
-        cout << "Invalid option, please select again: ";
-        cin >> choice;
+    cout << "Enter your choice: "; 
+    cin >> choiceStr;
+    while (choiceStr < "1" || choiceStr > "6"){
+        cout << "Invalid option, please select again: "; 
+        cin >> choiceStr;
     }
     cin.ignore();
 
-    if (choice == 1)
-    {
+    int choice = stoi(choiceStr);
+
+    if (choice == 1) {
         cout << "Enter new brand for the bike: ";
         getline(cin, brand);
-        while (brand.empty())
-        {
+        while (brand.empty()){
             cout << "Brand cannot be empty. Enter again: ";
             getline(cin, brand);
         }
-    }
-    else if (choice == 2)
-    {
+    } 
+    else if (choice == 2) {
         cout << "Enter new model for the bike: ";
         getline(cin, model);
-        while (model.empty())
-        {
+        while (model.empty()){
             cout << "Model cannot be empty. Enter again: ";
             getline(cin, model);
         }
-    }
-    else if (choice == 3)
-    {
+    } 
+    else if (choice == 3) {
         cout << "Enter new color for the bike: ";
         getline(cin, color);
-        while (color.empty())
-        {
+        while (color.empty()){
             cout << "Color cannot be empty. Enter again: ";
             getline(cin, color);
         }
-    }
-    else if (choice == 4)
-    {
+    } 
+    else if (choice == 4) {
         regex engineSizeFormat("^[1-9]\\d{0,3}[cC]{2}$");
-        cout << "Enter bike's engine (e.g, 125cc, 50cc, ...): ";
-        cin >> engineSize;
-        while (!regex_match(engineSize, engineSizeFormat))
-        {
+        cout << "Enter bike's engine (e.g, 125cc, 50cc, ...): "; cin >> engineSize;
+        while(!regex_match(engineSize, engineSizeFormat)){
             cout << "Please follow the format such as 150cc, 50cc, etc";
-            cout << "Enter the engine size again: ";
-            cin >> engineSize;
+            cout << "Enter the engine size again: "; cin >> engineSize;
         }
-    }
-    else if (choice == 5)
-    {
+    } 
+    else if (choice == 5) {
         cout << "Enter new year made: ";
         cin >> yearMade;
-    }
-    else if (choice == 6)
-    {
+    } 
+    else if (choice == 6) {
         cout << "Enter new license plate: ";
         getline(cin, licensePlate);
-        while (!check_plateFormat(licensePlate))
-        {
+        while (!check_plateFormat(licensePlate)){
             cout << "Wrong license plate format \nPlease enter the license plate again (XXMDXXXXXX): ";
             getline(cin, licensePlate);
         }
