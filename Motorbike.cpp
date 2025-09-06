@@ -6,7 +6,7 @@ using namespace std;
 
 bool check_plateFormat(string licensePlate)
 {
-    regex platePattern("^(0[1-9]|[1-9][0-9])MD\\d{6}$");
+    regex platePattern(R"(^\d{2}(?:MD|AC|CA|[A-Z]{1,2}\d?)?\d{3,4}\.\d{2}$)");
     return regex_match(licensePlate, platePattern);
 }
 
@@ -24,14 +24,16 @@ void Motorbike::insertMotorbike()
     getline(cin, model);
     cout << "Enter bike's color: ";
     getline(cin, color);
-    cout << "Enter bike's license plate (XXMDXXXXXX): ";
+
+    cout << "Enter bike's license plate (e.g., 64CA016.00, 65K3946.37): ";
     cin >> licensePlate;
     while (!check_plateFormat(licensePlate))
     {
         cout << "Wrong license plate format!!!" << endl;
-        cout << "Please enter the license plate again (XXMDXXXXXX): ";
+        cout << "Please enter again (format like 64CA016.00, 65K3946.37): ";
         cin >> licensePlate;
     }
+
     cout << "Enter bike's engine (e.g, 125cc, 50cc, ...): ";
     cin >> engineSize;
     while (!regex_match(engineSize, engineSizeFormat))
@@ -120,10 +122,11 @@ void Motorbike::editMotorbike(){
         cin >> yearMade;
     } 
     else if (choice == 6) {
-        cout << "Enter new license plate: ";
+        cout << "Enter new license plate (format: XXCA or AC, letter+X) XXX.XX for example 51K3659.54): ";
         getline(cin, licensePlate);
         while (!check_plateFormat(licensePlate)){
-            cout << "Wrong license plate format \nPlease enter the license plate again (XXMDXXXXXX): ";
+            cout << "Wrong license plate format!" << endl;
+            cout << "Please enter again (format like 64CA016.00, 65K3946.37): ";
             getline(cin, licensePlate);
         }
     }
