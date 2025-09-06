@@ -4,49 +4,67 @@
 #include "Motorbike.h"
 using namespace std;
 
-bool check_plateFormat(string licensePlate){
+bool check_plateFormat(string licensePlate)
+{
     regex platePattern("^(0[1-9]|[1-9][0-9])MD\\d{6}$");
     return regex_match(licensePlate, platePattern);
 }
 
-Motorbike::Motorbike(string brand, string model, string color, 
-string licensePlate,string engineSize, int yearMade)
-:brand(brand), model(model), color(color), licensePlate(licensePlate),
-engineSize(engineSize), yearMade(yearMade) {}
+Motorbike::Motorbike(string brand, string model, string color,
+                     string licensePlate, string engineSize, int yearMade)
+    : brand(brand), model(model), color(color), licensePlate(licensePlate),
+      engineSize(engineSize), yearMade(yearMade) {}
 
-void Motorbike::insertMotorbike(){
-    regex engineSizeFormat("^[1-9]\d{0,3}[cC]{2}$");
-    cout << "Enter bike's brand: "; getline(cin, brand);
-    cout << "Enter bike's model: "; getline(cin, model);
-    cout << "Enter bike's color: "; getline(cin, color);
-    cout << "Enter bike's license plate (XXMDXXXXXX): "; cin >> licensePlate;
-    while (!check_plateFormat(licensePlate)){
+void Motorbike::insertMotorbike()
+{
+    regex engineSizeFormat("^[1-9]\\d{0,3}[cC]{2}$");
+    cout << "Enter bike's brand: ";
+    getline(cin, brand);
+    cout << "Enter bike's model: ";
+    getline(cin, model);
+    cout << "Enter bike's color: ";
+    getline(cin, color);
+    cout << "Enter bike's license plate (XXMDXXXXXX): ";
+    cin >> licensePlate;
+    while (!check_plateFormat(licensePlate))
+    {
         cout << "Wrong license plate format!!!" << endl;
-        cout << "Please enter the license plate again (XXMDXXXXXX): "; cin >> licensePlate;
+        cout << "Please enter the license plate again (XXMDXXXXXX): ";
+        cin >> licensePlate;
     }
-    cout << "Enter bike's engine (e.g, 125cc, 50cc, ...): "; cin >> engineSize;
-    while(!regex_match(engineSize, engineSizeFormat)){
+    cout << "Enter bike's engine (e.g, 125cc, 50cc, ...): ";
+    cin >> engineSize;
+    while (!regex_match(engineSize, engineSizeFormat))
+    {
         cout << "Please follow the format such as 150cc, 50cc, etc";
-        cout << "Enter the engine size again: "; cin >> engineSize;
+        cout << "Enter the engine size again: ";
+        cin >> engineSize;
     }
 
-    cout << "Enter year made: "; cin >> yearMade; cin.ignore();
+    cout << "Enter year made: ";
+    cin >> yearMade;
+    cin.ignore();
 }
 
-bool Motorbike::checkSize(){
+bool Motorbike::checkSize()
+{
     return stoi(engineSize.substr(0, engineSize.length() - 2)) > 50;
 }
 
-bool Motorbike::checkExist(){
-    if (licensePlate != "N/A") return 1;
+bool Motorbike::checkExist()
+{
+    if (licensePlate != "N/A")
+        return 1;
     return 0;
 }
 
-string Motorbike::showMotorbike(){
+string Motorbike::showMotorbike()
+{
     return brand + " " + model + "  Engine size: " + engineSize + "\n";
 }
 
-void Motorbike::editMotorbike(){
+void Motorbike::editMotorbike()
+{
     int choice;
     cout << "What do you want to update: " << endl;
     cout << "1. Brand" << endl;
@@ -56,82 +74,99 @@ void Motorbike::editMotorbike(){
     cout << "5. Year made" << endl;
     cout << "6. License plate" << endl;
 
-    cout << "Enter your choice: "; 
+    cout << "Enter your choice: ";
     cin >> choice;
-    while (choice < 1 || choice > 6){
-        cout << "Invalid option, please select again: "; 
+    while (choice < 1 || choice > 6)
+    {
+        cout << "Invalid option, please select again: ";
         cin >> choice;
     }
     cin.ignore();
 
-    if (choice == 1) {
+    if (choice == 1)
+    {
         cout << "Enter new brand for the bike: ";
         getline(cin, brand);
-        while (brand.empty()){
+        while (brand.empty())
+        {
             cout << "Brand cannot be empty. Enter again: ";
             getline(cin, brand);
         }
-    } 
-    else if (choice == 2) {
+    }
+    else if (choice == 2)
+    {
         cout << "Enter new model for the bike: ";
         getline(cin, model);
-        while (model.empty()){
+        while (model.empty())
+        {
             cout << "Model cannot be empty. Enter again: ";
             getline(cin, model);
         }
-    } 
-    else if (choice == 3) {
+    }
+    else if (choice == 3)
+    {
         cout << "Enter new color for the bike: ";
         getline(cin, color);
-        while (color.empty()){
+        while (color.empty())
+        {
             cout << "Color cannot be empty. Enter again: ";
             getline(cin, color);
         }
-    } 
-    else if (choice == 4) {
-        regex engineSizeFormat("^[1-9]\d{0,3}[cC]{2}$");
-        cout << "Enter bike's engine (e.g, 125cc, 50cc, ...): "; cin >> engineSize;
-        while(!regex_match(engineSize, engineSizeFormat)){
+    }
+    else if (choice == 4)
+    {
+        regex engineSizeFormat("^[1-9]\\d{0,3}[cC]{2}$");
+        cout << "Enter bike's engine (e.g, 125cc, 50cc, ...): ";
+        cin >> engineSize;
+        while (!regex_match(engineSize, engineSizeFormat))
+        {
             cout << "Please follow the format such as 150cc, 50cc, etc";
-            cout << "Enter the engine size again: "; cin >> engineSize;
+            cout << "Enter the engine size again: ";
+            cin >> engineSize;
         }
-    } 
-    else if (choice == 5) {
+    }
+    else if (choice == 5)
+    {
         cout << "Enter new year made: ";
         cin >> yearMade;
-    } 
-    else if (choice == 6) {
+    }
+    else if (choice == 6)
+    {
         cout << "Enter new license plate: ";
         getline(cin, licensePlate);
-        while (!check_plateFormat(licensePlate)){
+        while (!check_plateFormat(licensePlate))
+        {
             cout << "Wrong license plate format \nPlease enter the license plate again (XXMDXXXXXX): ";
             getline(cin, licensePlate);
         }
     }
 }
 
-
-void Motorbike::show2Renter(Date startDate, Date endDate, string ownerName, bool status){
+void Motorbike::show2Renter(Date startDate, Date endDate, string ownerName, bool status)
+{
     cout << left << setw(23) << "Rental period" << " |";
-    cout << setw((brand.length() > 5?brand.length() + 2: 7)) << "Brand" << "|";
-    cout << setw((model.length() > 5?model.length() + 2: 7)) << "Model" << "|";
-    cout << setw((color.length() > 5?color.length() + 2: 7)) << "Color" << "|";
-    cout << setw((engineSize.length() > 4?engineSize.length() + 2: 6)) << "Size" << "|";
-    cout << setw((licensePlate.length() > 9? licensePlate.length() + 2: 11)) << "Plate No." << "|";
-    cout << setw((ownerName.length() > 5?ownerName.length() + 2: 7)) << "Owner" << "|";
+    cout << setw((brand.length() > 5 ? brand.length() + 2 : 7)) << "Brand" << "|";
+    cout << setw((model.length() > 5 ? model.length() + 2 : 7)) << "Model" << "|";
+    cout << setw((color.length() > 5 ? color.length() + 2 : 7)) << "Color" << "|";
+    cout << setw((engineSize.length() > 4 ? engineSize.length() + 2 : 6)) << "Size" << "|";
+    cout << setw((licensePlate.length() > 9 ? licensePlate.length() + 2 : 11)) << "Plate No." << "|";
+    cout << setw((ownerName.length() > 5 ? ownerName.length() + 2 : 7)) << "Owner" << "|";
     cout << setw(9) << "Status" << endl;
-    startDate.showDate(); cout << " - "; endDate.showDate(); cout << setw(2) << setfill(' ') << " |";
-    cout << left << setw((brand.length() > 5?brand.length() + 2: 7)) << brand << "|";
-    cout << setw((model.length() > 5?model.length() + 2: 7)) << model << "|";
-    cout << setw((color.length() > 5?color.length() + 2: 7)) << color << "|";
-    cout << setw((engineSize.length() > 4?engineSize.length() + 2: 6)) << engineSize << "|";
-    cout << setw((licensePlate.length() > 9? licensePlate.length() + 2: 11)) << licensePlate << "|";
-    cout << setw((ownerName.length() > 5?ownerName.length() + 2: 7)) << ownerName << "|";
+    startDate.showDate();
+    cout << " - ";
+    endDate.showDate();
+    cout << setw(2) << setfill(' ') << " |";
+    cout << left << setw((brand.length() > 5 ? brand.length() + 2 : 7)) << brand << "|";
+    cout << setw((model.length() > 5 ? model.length() + 2 : 7)) << model << "|";
+    cout << setw((color.length() > 5 ? color.length() + 2 : 7)) << color << "|";
+    cout << setw((engineSize.length() > 4 ? engineSize.length() + 2 : 6)) << engineSize << "|";
+    cout << setw((licensePlate.length() > 9 ? licensePlate.length() + 2 : 11)) << licensePlate << "|";
+    cout << setw((ownerName.length() > 5 ? ownerName.length() + 2 : 7)) << ownerName << "|";
     cout << (status == 1 ? "Accepted" : "Rejected") << endl;
 }
 
-
-ostream& operator << (ostream &out, Motorbike bike){
+ostream &operator<<(ostream &out, Motorbike bike)
+{
     out << bike.brand << endl;
     out << bike.model << endl;
     out << bike.color << endl;
@@ -139,13 +174,11 @@ ostream& operator << (ostream &out, Motorbike bike){
     return out;
 }
 
-istream& operator >> (istream &in, Motorbike &bike){
+istream &operator>>(istream &in, Motorbike &bike)
+{
     getline(in >> ws, bike.brand);
     getline(in >> ws, bike.model);
     getline(in >> ws, bike.color);
     in >> bike.licensePlate >> bike.engineSize >> bike.yearMade;
     return in;
 }
-
-
-
