@@ -228,15 +228,32 @@ int main()
             else if (functionChoice == "8")
             {
                 Date start, end;
-                int location;
+                string locationStr;
                 vector<string> validOptions;
                 cout << "Enter date range" << endl;
                 cout << "Enter start date: ";
                 start.insertDate();
                 cout << "Enter end date: ";
                 end.insertDate();
-                cout << "Enter location: ";
-                cin >> location;
+                while (start > end)
+                {
+                    cout << "End date must be after start date" << endl;
+                    cout << "Please enter end date again: ";
+                    end.insertDate();
+                }
+                cout << "Enter location: " << endl;
+                cout << "1. HCM" << endl;
+                cout << "2. Ha Noi" << endl;   
+
+                while (true)
+                {
+                    cout << "Your choice: ";
+                    cin >> locationStr;
+                    if (locationStr == "1" || locationStr == "2")
+                        break;
+                    cout << "Invalid option, please select again." << endl;
+                }
+                int location = stoi(locationStr);
                 cin.ignore();
                 for (pair<string, Member> member : members)
                 {
