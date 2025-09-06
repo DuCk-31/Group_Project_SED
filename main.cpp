@@ -60,6 +60,9 @@ int main()
          << "XXXXXXX, Student Name" << endl;
 
     cout << "Use the app as   1. Guest   2. Member   3. Admin" << endl;
+    cout << "1. Guest" << endl;
+    cout << "2. Member" << endl;
+    cout << "3. Admin" << endl;
     cout << "Enter your choice: ";
     cin >> choice;
 
