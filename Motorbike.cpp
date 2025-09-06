@@ -15,7 +15,7 @@ string licensePlate,string engineSize, int yearMade)
 engineSize(engineSize), yearMade(yearMade) {}
 
 void Motorbike::insertMotorbike(){
-    regex engineSizeFormat("^[1-9][0-9]{2}cc$");
+    regex engineSizeFormat("^[1-9]\d{0,3}[cC]{2}$");
     cout << "Enter bike's brand: "; getline(cin, brand);
     cout << "Enter bike's model: "; getline(cin, model);
     cout << "Enter bike's color: "; getline(cin, color);
@@ -89,7 +89,7 @@ void Motorbike::editMotorbike(){
         }
     } 
     else if (choice == 4) {
-        regex engineSizeFormat("^[1-9][0-9]{2}cc$");
+        regex engineSizeFormat("^[1-9]\d{0,3}[cC]{2}$");
         cout << "Enter bike's engine (e.g, 125cc, 50cc, ...): "; cin >> engineSize;
         while(!regex_match(engineSize, engineSizeFormat)){
             cout << "Please follow the format such as 150cc, 50cc, etc";
