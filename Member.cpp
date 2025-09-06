@@ -107,6 +107,8 @@ void Member::insertMember(string username){
     personalInfomation.insertInfo(username);
     personalDocument.insertDoc();
     cout << "Do you want to register a bike?   1. Yes   2. No" << endl;
+    cout << "1. Yes" << endl;
+    cout << "2. No" << endl;
     cout << "Your choice: "; cin >> checkBike; cin.ignore();
     if (checkBike == 1) bike.insertMotorbike();
     else bike = Motorbike();

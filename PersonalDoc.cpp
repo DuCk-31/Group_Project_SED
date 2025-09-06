@@ -11,7 +11,9 @@ PersonalDoc::PersonalDoc(int type, string idNumber, long long licenseNumber, Dat
 
 void PersonalDoc::insertDoc(){
     int licenseCheck;
-    cout << "Choose your personal document type:   1. Citizen ID   2. Passport" << endl;
+    cout << "Choose your personal document type:" << endl;
+    cout << "1. Citizen ID" << endl;
+    cout << "2. Passport" << endl;
     cout << "Your choice: "; cin >> type;
     while(true){
         if (type == 1 || type == 2) break;
@@ -25,7 +27,9 @@ void PersonalDoc::insertDoc(){
         cout << "Please enter your ID number again: "; cin >> idNumber;
     }
 
-    cout << "Do you have a license?   1. Yes   2. No" << endl;
+    cout << "Do you have a license?" << endl;
+    cout << "1. Yes" << endl;
+    cout << "2. No" << endl;
     cout << "Your choice: "; cin >> licenseCheck;
     while(true){
         if (licenseCheck == 1 || licenseCheck == 2) break;
@@ -66,7 +70,9 @@ bool PersonalDoc::checkLicense(Date end){
 
 void PersonalDoc::editDoc(int choice){
     if (choice == 4){
-        cout << "Select your personal document type:   1. Citizen ID   2. Passport" << endl;
+        cout << "Select your personal document type:" << endl;
+        cout << "1. Citizen ID" << endl;
+        cout << "2. Passport" << endl;
         cout << "Your choice: "; cin >> type;
         while(true){
             if (type == 1 || type == 2) break;
