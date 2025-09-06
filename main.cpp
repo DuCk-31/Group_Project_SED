@@ -145,29 +145,31 @@ int main()
             }
         }
 
-        cout << endl
-             << "Account overview: " << usernameTemp << endl;
+        
+        while (true)
+        {   cout << endl
+            << "Account overview: " << usernameTemp << endl;
         cout << "---------------------------------------" << endl
-             << endl;
+                << endl;
 
         cout << "Current Credit Points: " << members[usernameTemp].getCPs() << endl;
         cout << "Renter rating: " << members[usernameTemp].calculateRating();
         cout << "   Motobike rating: " << members[usernameTemp].calculateMotoRating();
         cout << endl
-             << endl;
+                << endl;
 
         cout << "Your active rental booking" << endl;
         cout << "---------------------------------------" << endl;
         members[usernameTemp].showActive();
         cout << endl
-             << endl;
+                << endl;
 
         cout << "Your active rental request" << endl;
         cout << "---------------------------------------" << endl;
         members[usernameTemp].showRequest();
 
         cout << endl
-             << "This is your menu: " << endl;
+                << "This is your menu: " << endl;
         cout << "1. Log out" << endl;
         cout << "2. Update profile" << endl;
         cout << "3. Change password" << endl;
@@ -181,8 +183,7 @@ int main()
         cout << "11. Return a motorbike" << endl;
         cout << "12. Confirm motorbike return from renter" << endl;
         cout << "13. Verify your account" << endl;
-        while (true)
-        {
+
             cout << "Enter your choice: ";
             cin >> functionChoice;
             cin.ignore();
