@@ -45,9 +45,10 @@ void PersonalInfo::insertInfo(string username) {
 }
 
 void PersonalInfo::printInfo(){
-    cout << "fullName: " << fullName << "  ";
-    cout << "username: " << username << endl;
-    cout << "email: " << email << "  ";
+    cout << "=== Personal Information ===" << endl;
+    cout << "Full name: " << fullName << "  ";
+    cout << "Username: " << username << endl;
+    cout << "Email: " << email << "  ";
     cout << "Phone number: " << phoneNumber << endl;
 }
 

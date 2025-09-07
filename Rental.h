@@ -30,6 +30,8 @@ class Rental{
 
     void showHistory();
 
+    void printInfo(bool printStatus);
+
     friend ostream& operator << (ostream& out, Rental rental);
     friend istream& operator >> (istream& in, Rental &rental);
 

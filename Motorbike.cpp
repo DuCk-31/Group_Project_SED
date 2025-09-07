@@ -132,6 +132,16 @@ void Motorbike::editMotorbike(){
     }
 }
 
+void Motorbike::printInfo() {
+    cout << "=== Motorbike Information ===\n";
+    cout << "Brand        : " << brand        << "\n";
+    cout << "Model        : " << model        << "\n";
+    cout << "Color        : " << color        << "\n";
+    cout << "LicensePlate : " << licensePlate << "\n";
+    cout << "Engine Size  : " << engineSize   << "\n";
+    cout << "Year Made    : " << yearMade     << "\n";
+}
+
 void Motorbike::show2Renter(Date startDate, Date endDate, string ownerName, bool status)
 {
     cout << left << setw(23) << "Rental period" << " |";

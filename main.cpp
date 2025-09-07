@@ -344,6 +344,15 @@ int main()
             }
         }
     }
+    else if (choice == "3")
+    {   
+        cout << endl;
+        for (pair<string, Member> member : members)
+        {
+            member.second.show2Admin();
+            cout << endl;
+        }               
+    }
 
     myfile.open("MemberData.dat", ios::out | ios::trunc);
     for (pair<string, Member> member : members)

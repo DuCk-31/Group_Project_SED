@@ -37,6 +37,16 @@ void Rental::showHistory(){
      << (status == 1?"(Accepted)":"(Rejected)" ) << endl;
 }
 
+void Rental::printInfo(bool printStatus){
+    cout << "=== Rental Information ===" << endl;
+    cout << "Rental Period: "; startDate.showDate(); cout << " - "; endDate.showDate(); cout << endl;
+    cout << "Renter Name: " << renterName << endl;
+    cout << "Owner Name: " << ownerName << endl;
+    cout << "Renter Rating: " << (renterRating == -1 ? "N/A" : to_string(renterRating)) << endl;
+    if (printStatus == 1) cout << "Status: " << (status == 1 ? "Accepted" : "Rejected") << endl;
+    if (!printStatus) cout << "Status: Pending" << endl;
+}
+
 ostream& operator << (ostream& out, Rental rental){
     out << rental.startDate << " " << rental.endDate << endl;
     out << rental.renterName << endl << rental.ownerName << endl;

@@ -71,6 +71,7 @@ void PersonalDoc::insertDoc(){
 }
 
 void PersonalDoc::printDoc(){
+    cout << "=== Personal Document Information ===" << endl;
     cout << (type == 1 ? "Citizen ID: " : "Passport: ") << idNumber << '\n';
     cout << "License number: " 
               << (licenseNumber == 0 ? "Not registered" : to_string(licenseNumber));
