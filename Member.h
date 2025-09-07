@@ -58,7 +58,13 @@ class Member{
     bool validateOptions(string renterName);
 
     bool isReturn();
-    
+
+    bool checkReturn();
+
+    bool checkListStatus();
+
+    bool checkRequest();
+
     void deductCPs(int totalPrice);
 
     void insertMember(string username);

@@ -94,8 +94,20 @@ bool Member::isReturn(){
         return ownerName == "N/A";
     }
 
+bool Member::checkReturn(){
+    return renterName == "N/A";
+}
+
 bool Member::validateOptions(string renterName){
     return renterRequest.count(renterName) != 0;
+}
+
+bool Member::checkListStatus(){
+    return listBike.checkStatus();
+}
+
+bool Member::checkRequest(){
+    return renterRequest.size() != 0;
 }
 
 void Member::deductCPs(int totalPrice){

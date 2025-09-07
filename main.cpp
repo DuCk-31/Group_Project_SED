@@ -208,10 +208,15 @@ int main()
                 members[usernameTemp].showHistory();
             }
             else if (functionChoice == "6")
-            {
+            {   
                 if (members[usernameTemp].getBike().checkExist() == 0)
                 {
                     cout << "You have not registered any bikes" << endl;
+                    cout << "So you cannot list a bike" << endl;
+                }
+                else if (members[usernameTemp].checkListStatus())
+                {
+                    cout << "You have listed your bike" << endl;
                     cout << "So you cannot list a bike" << endl;
                 }
                 else
@@ -220,10 +225,23 @@ int main()
                 }
             }
             else if (functionChoice == "7")
-            {
-                cout << "Unlist motorbike successful.";
-                cout << endl;
-                members[usernameTemp].unlistmyBike();
+            {   if (!members[usernameTemp].checkListStatus())
+                {
+                    cout << "You have not listed your bike" << endl;
+                    cout << "So you cannot unlist a bike" << endl;
+                }
+                else if (!members[usernameTemp].checkReturn())
+                {
+                    cout << "Your bike is being rented" << endl;
+                    cout << "So you cannot unlist your bike" << endl;
+                }
+                else
+                {
+                    
+                    members[usernameTemp].unlistmyBike();
+                    cout << "Unlist motorbike successful.";
+                    cout << endl;
+                }
             }
             else if (functionChoice == "8")
             {
@@ -301,7 +319,11 @@ int main()
                 }
             }
             else if (functionChoice == "9")
-            {
+            {   if (!members[usernameTemp].checkRequest())
+                {
+                    cout << "You have no rental request" << endl;
+                    continue;
+                }
                 string choice;
                 cout << "Your active rental request" << endl;
                 cout << "---------------------------------------" << endl;
@@ -316,7 +338,11 @@ int main()
                 members[usernameTemp].acceptRequest(members, choice);
             }
             else if (functionChoice == "10")
-            {
+            {   if (!members[usernameTemp].checkRequest())
+                {
+                    cout << "You have no rental request" << endl;
+                    continue;
+                }
                 string choice;
                 cout << "Your active rental request" << endl;
                 cout << "---------------------------------------" << endl;
