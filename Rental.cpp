@@ -5,7 +5,7 @@
 using namespace std;
 
 Rental::Rental(Date startDate, Date endDate, string renterName,
-    string ownerName, Motorbike bike, bool status, int renterRating)
+    string ownerName, Motorbike bike, bool status, float renterRating)
     : startDate(startDate), endDate(endDate), renterName(renterName),
     ownerName(ownerName), bike(bike), status(status), renterRating(renterRating) {};
 
