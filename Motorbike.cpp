@@ -137,8 +137,8 @@ void Motorbike::printInfo() {
     cout << "Brand        : " << brand        << "\n";
     cout << "Model        : " << model        << "\n";
     cout << "Color        : " << color        << "\n";
-    cout << "LicensePlate : " << licensePlate << "\n";
-    cout << "Engine Size  : " << engineSize   << "\n";
+    cout << "License plate: " << licensePlate << "\n";
+    cout << "Engine size  : " << engineSize   << "\n";
     cout << "Year Made    : " << yearMade     << "\n";
 }
 

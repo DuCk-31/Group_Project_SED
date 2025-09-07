@@ -44,8 +44,8 @@ void Listing::printInfo()  {
     if (dailyPrice >= 0) cout << dailyPrice << "\n";
     else cout << "N/A\n";
 
-    cout << "Location (code)    : ";
-    if (location >= 0) cout << location << "\n";
+    cout << "Location           : ";
+    if (location == 1 || location == 2) cout << (location == 1 ? "HCM " : "Ha Noi ") << "\n";
     else cout << "N/A\n";
 
     cout << "Rating Requirement : ";
