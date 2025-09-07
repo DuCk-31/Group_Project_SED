@@ -16,7 +16,7 @@ class Rental{
     public:
 
     Rental(Date startDate = Date(), Date endDate = Date(), string renterName = string(),
-    string ownerName = string(), Motorbike bike = Motorbike(), bool status = 0, int renterRating = -1);
+    string ownerName = string(), Motorbike bike = Motorbike(), bool status = 0, float renterRating = -1);
 
     Date getDate(int choice);
 
@@ -29,6 +29,8 @@ class Rental{
     void show2Renter();
 
     void showHistory();
+
+    void printInfo(bool printStatus);
 
     friend ostream& operator << (ostream& out, Rental rental);
     friend istream& operator >> (istream& in, Rental &rental);

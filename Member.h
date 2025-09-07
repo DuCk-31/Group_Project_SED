@@ -97,6 +97,8 @@ class Member{
 
     void topupCPs();
 
+    void show2Admin();
+
     friend ostream& operator << (ostream& out, Member member);
     friend istream& operator >> (istream& in, Member &member);
 

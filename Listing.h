@@ -22,6 +22,8 @@ class Listing{
 
     void unlistMotorbike();
 
+    void printInfo();
+
     bool checkStatus();
 
     bool checkRequirement(float renterRating);

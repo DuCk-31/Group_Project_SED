@@ -5,7 +5,7 @@
 using namespace std;
 
 Rental::Rental(Date startDate, Date endDate, string renterName,
-    string ownerName, Motorbike bike, bool status, int renterRating)
+    string ownerName, Motorbike bike, bool status, float renterRating)
     : startDate(startDate), endDate(endDate), renterName(renterName),
     ownerName(ownerName), bike(bike), status(status), renterRating(renterRating) {};
 
@@ -35,6 +35,16 @@ void Rental::showHistory(){
     startDate.showDate(); cout << " - "; endDate.showDate();
     cout << "  |" << ownerName << "   " 
      << (status == 1?"(Accepted)":"(Rejected)" ) << endl;
+}
+
+void Rental::printInfo(bool printStatus){
+    cout << "=== Rental Information ===" << endl;
+    cout << "Rental Period: "; startDate.showDate(); cout << " - "; endDate.showDate(); cout << endl;
+    cout << "Renter Name: " << renterName << endl;
+    cout << "Owner Name: " << ownerName << endl;
+    cout << "Renter Rating: " << (renterRating == -1 ? "N/A" : to_string(renterRating)) << endl;
+    if (printStatus == 1) cout << "Status: " << (status == 1 ? "Accepted" : "Rejected") << endl;
+    if (!printStatus) cout << "Status: Pending" << endl;
 }
 
 ostream& operator << (ostream& out, Rental rental){

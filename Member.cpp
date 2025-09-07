@@ -291,10 +291,11 @@ void Member::showMotoRating(){
         cout << "No rating at the moment" << endl;
         return;
     }
+    cout << "Motorbike rating: " << calculateMotoRating() << endl;
+    cout << "All ratings: " << endl;
     for (Rating rating : motorbikeRating){
         rating.showRating();
     }
-    cout << "------------------------" << endl;
 }
 
 void Member::editProfile(){
@@ -410,6 +411,39 @@ void Member::topupCPs(){
     creditPoints += CPs;
 
     cout << "Top up successfuly, now you are having " << creditPoints << " Credit Point(s)" << endl;
+}
+
+void Member::show2Admin(){
+    cout << "=== Member Information ===" << endl;
+    cout << "Member rating: " << calculateRating() << endl;
+    cout << "Credit points: " << creditPoints << endl;
+    cout << "Status: " << (status == 1 ? "Busy" : "Free") << endl;
+    cout << "Password: " << password << endl << endl;
+    personalInfomation.printInfo(); cout << endl;
+    personalDocument.printDoc(); cout << endl;
+    bike.printInfo(); cout << endl;
+    listBike.printInfo(); cout << endl;
+    cout << "Unavailable periods: " << endl;
+    if (unavailablePeriod.size() == 0) cout << "N/A" << endl;
+    for (UnavailablePeriod period : unavailablePeriod){
+            cout << period;
+        }
+        cout << endl << "Renter requests: " << endl;
+    if (renterRequest.size() == 0) cout << "N/A" << endl;
+    for (auto rental : renterRequest){
+        rental.second.printInfo(0);
+        }
+        cout << endl << "Active rentals: " << endl;
+    if (activeRental.size() == 0) cout << "N/A" << endl;
+    for (Rental rental : activeRental){
+        rental.printInfo(1);
+    }
+    cout << endl << "Booking history: " << endl;
+    if (history.size() == 0) cout << "N/A" << endl;
+    for (Rental rental : history){
+        rental.printInfo(1);
+    }
+    cout << endl << "=========================" << endl;
 }
 
 ostream& operator << (ostream& out, Member member){

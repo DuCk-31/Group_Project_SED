@@ -26,6 +26,8 @@ class Motorbike{
 
     void editMotorbike();
 
+    void printInfo();
+
     void show2Renter(Date startDate, Date endDate, string ownerName, bool status);
 
     friend ostream& operator << (ostream &out, Motorbike bike);

@@ -237,7 +237,7 @@ int main()
                 end.insertDate();
                 while (start > end)
                 {
-                    cout << "End date must be after start date" << endl;
+                    cout << "End date must be after or equal to start date" << endl;
                     cout << "Please enter end date again: ";
                     end.insertDate();
                 }
@@ -343,6 +343,15 @@ int main()
                 cout << "Invalid option, please enter valid option" << endl;
             }
         }
+    }
+    else if (choice == "3")
+    {   
+        cout << endl;
+        for (pair<string, Member> member : members)
+        {
+            member.second.show2Admin();
+            cout << endl;
+        }               
     }
 
     myfile.open("MemberData.dat", ios::out | ios::trunc);

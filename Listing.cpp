@@ -37,6 +37,32 @@ void Listing::unlistMotorbike(){
     *this = Listing();
 }
 
+void Listing::printInfo()  {
+    cout << "=== Listing Information ===\n";
+    cout << "Status             : " << (status ? "Listed" : "Unlisted") << "\n";
+    cout << "Daily Price        : ";
+    if (dailyPrice >= 0) cout << dailyPrice << "\n";
+    else cout << "N/A\n";
+
+    cout << "Location           : ";
+    if (location == 1 || location == 2) cout << (location == 1 ? "HCM " : "Ha Noi ") << "\n";
+    else cout << "N/A\n";
+
+    cout << "Rating Requirement : ";
+    if (ratingRequirement >= 0) cout << ratingRequirement << "\n";
+    else cout << "N/A\n";
+
+    cout << "Available Start    : ";
+    if (startDate.getDate(3) != 0) startDate.showDate();
+    else cout << "N/A";
+    cout << "\n";
+
+    cout << "Available End      : ";
+    if (endDate.getDate(3) != 0) endDate.showDate();
+    else cout << "N/A";
+    cout << "\n";
+}
+
 bool Listing::checkStatus(){
     return status;
 }
