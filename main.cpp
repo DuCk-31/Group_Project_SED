@@ -54,10 +54,10 @@ int main()
          << "E-MOTORBIKE RENTAL APPLICATION" << endl
          << "Instructor: Dr Ling Huo Chong, Dr Ushik Shrestha, Dr Tri Huynh" << endl
          << "Group: Group No.11" << endl
-         << "XXXXXXX, Tran Dang Khoi" << endl
+         << "4097635, Tran Dang Khoi" << endl
          << "4137976, Nguyen Huynh Duc" << endl
-         << "XXXXXXX, Tran Gia Khanh" << endl
-         << "XXXXXXX, Bui Hoang Thai Hung" << endl;
+         << "4041377, Tran Gia Khanh" << endl
+         << "4019314, Bui Hoang Thai Hung" << endl;
 
     cout << "Use the app as   1. Guest   2. Member   3. Admin" << endl;
     cout << "1. Guest" << endl;
