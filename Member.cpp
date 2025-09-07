@@ -291,10 +291,11 @@ void Member::showMotoRating(){
         cout << "No rating at the moment" << endl;
         return;
     }
+    cout << "Motorbike rating: " << calculateMotoRating() << endl;
+    cout << "All ratings: " << endl;
     for (Rating rating : motorbikeRating){
         rating.showRating();
     }
-    cout << "------------------------" << endl;
 }
 
 void Member::editProfile(){
@@ -442,6 +443,7 @@ void Member::show2Admin(){
     for (Rental rental : history){
         rental.printInfo(1);
     }
+    cout << endl << "=========================" << endl;
 }
 
 ostream& operator << (ostream& out, Member member){
