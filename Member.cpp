@@ -1,23 +1,10 @@
 #include <iostream>
-#include <cstring>
+#include <string>
 #include <iomanip>
 #include <ctime>
 #include "Member.h"
 
 using namespace std;
-
-bool checkOTP(string OTPCode, int OTP[4]){
-    if (OTPCode.length() != 4) {
-        return 0;
-    }
-
-    for (int i = 0; i < 4; i++){
-        if (OTPCode[i] != OTP[i]) return 0;
-    }
-
-    return 1;
-
-}
 
 bool checkPassword(const string& password) {
     bool hasDigit = false, hasUpper = false, hasLower = false, hasSpecial = false;
@@ -267,24 +254,24 @@ void Member::verifyMember(){
     }
     srand(time(0));  // seed random generator
 
-    int OTP[4];  // array to store 4 numbers
+    string OTP = "";  // array to store 4 numbers
 
     // generate, store, print numbers
     cout << "OTP have sent to " << personalInfomation.getInfo(4) << endl;
     cout << "Please do not share this code to anyone" << endl;
     cout << "The code is: ";
     for (int i = 0; i < 4; i++) {
-        OTP[i] = rand() % 10; 
-        cout << OTP[i] << " "; // 0–9
+        OTP += to_string(rand() % 10); 
     }
+    cout << OTP;
     cout << endl;
 
     string OTPCode;
     cout << "You have five times to enter the correct code" << endl;
-    cout << "Enter the correct code";
+    cout << "Enter the correct code: ";
     cin >> OTPCode;
     for (int i = 0; i < 5; i++){
-        if (checkOTP(OTPCode, OTP)) 
+        if (OTPCode == OTP) 
         {
             cout << "Correct OTP code,  your account has been verified!!!" << endl;
             verifyStatus = 1;
