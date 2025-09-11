@@ -1,9 +1,23 @@
 #include <iostream>
 #include <cstring>
 #include <iomanip>
+#include <ctime>
 #include "Member.h"
 
 using namespace std;
+
+bool checkOTP(string OTPCode, int OTP[4]){
+    if (OTPCode.length() != 4) {
+        return 0;
+    }
+
+    for (int i = 0; i < 4; i++){
+        if (OTPCode[i] != OTP[i]) return 0;
+    }
+
+    return 1;
+
+}
 
 bool checkPassword(const string& password) {
     bool hasDigit = false, hasUpper = false, hasLower = false, hasSpecial = false;
@@ -32,10 +46,10 @@ bool checkPassword(const string& password) {
 }
 
 Member::Member(PersonalInfo info, PersonalDoc doc, Listing list,
-        string renterName, string ownerName, string password, int status, Motorbike bike)
+        string renterName, string ownerName, string password, int status, Motorbike bike, bool verifyStatus)
         :personalInfomation(info), personalDocument(doc), listBike(list),
         renterName(renterName), ownerName(ownerName), password(password), status(status),
-        bike(bike) {}
+        bike(bike), verifyStatus(verifyStatus){}
 
 Motorbike Member::getBike(){
     return bike;
@@ -108,6 +122,10 @@ bool Member::checkListStatus(){
 
 bool Member::checkRequest(){
     return renterRequest.size() != 0;
+}
+
+bool Member::checkVerify(){
+    return verifyStatus;
 }
 
 void Member::deductCPs(int totalPrice){
@@ -239,6 +257,42 @@ void Member::rateRenter(map <string, Member> &members){
     members[renterName].myRating.push_back(temp);
     members[renterName].changeStatus(0); //renter 100% free
     renterName = "N/A";
+}
+
+void Member::verifyMember(){
+
+    if (verifyStatus) {
+        cout << "Your account has been verified already" << endl;
+        return;
+    }
+    srand(time(0));  // seed random generator
+
+    int OTP[4];  // array to store 4 numbers
+
+    // generate, store, print numbers
+    cout << "OTP have sent to " << personalInfomation.getInfo(4) << endl;
+    cout << "Please do not share this code to anyone" << endl;
+    cout << "The code is: ";
+    for (int i = 0; i < 4; i++) {
+        OTP[i] = rand() % 10; 
+        cout << OTP[i] << " "; // 0–9
+    }
+    cout << endl;
+
+    string OTPCode;
+    cout << "You have five times to enter the correct code" << endl;
+    cout << "Enter the correct code";
+    cin >> OTPCode;
+    for (int i = 0; i < 5; i++){
+        if (checkOTP(OTPCode, OTP)) 
+        {
+            cout << "Correct OTP code,  your account has been verified!!!" << endl;
+            verifyStatus = 1;
+            return;
+        }
+        cout << "Wrong OTP you have " << 5 - i << " times left, please enter again: "; cin >> OTPCode;
+    }
+    cout << "Fail to verify your account, you have entered wrong code for five times" << endl;
 }
 
 void Member::listmyBike(){
@@ -494,7 +548,7 @@ ostream& operator << (ostream& out, Member member){
     for (int i = 0; i < member.myRating.size(); i++){
         out << member.myRating[i];
     }
-    out << member.creditPoints << " " << member.status << endl;
+    out << member.creditPoints << " " << member.status << " " << member.verifyStatus << endl;
     return out;
 }
 
@@ -556,6 +610,6 @@ istream& operator >> (istream& in, Member &member){
         member.myRating.push_back(temp);
     }
 
-    in >> member.creditPoints >> member.status;
+    in >> member.creditPoints >> member.status >> member.verifyStatus;
     return in;
 }

@@ -148,7 +148,7 @@ int main()
         
         while (true)
         {   cout << endl
-            << "Account overview: " << usernameTemp << endl;
+            << "Account overview: " << usernameTemp << (members[usernameTemp].checkVerify()?"  (Verified)":"  (Unverified)") << endl;
         cout << "---------------------------------------" << endl
                 << endl;
 
@@ -363,6 +363,9 @@ int main()
             else if (functionChoice == "12")
             {
                 members[usernameTemp].rateRenter(members);
+            }
+            else if (functionChoice == "13"){
+                members[usernameTemp].verifyMember();
             }
             else
             {
