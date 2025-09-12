@@ -11,7 +11,7 @@ bool isValidDate(Date date) {
     int year = date.getDate(3);
 
     if (year < 0 || month < 1 || month > 12 || day < 1)
-        return false;
+        return 0;
 
     int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
@@ -45,6 +45,17 @@ void Date::showDate() {
     std::cout << setw(2) << setfill('0') << right << day << "/"
               << setw(2) << setfill('0') << right << month << "/"
               << year;
+}
+
+Date Date::today(){
+    time_t t = time(nullptr);
+    tm tm = {};
+    #if defined(_WIN32)
+        localtime_s(&tm, &t);
+    #else
+        localtime_r(&t, &tm);
+    #endif
+    return Date(tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
 }
 
 std::ostream& operator<<(std::ostream &out, Date d1) {

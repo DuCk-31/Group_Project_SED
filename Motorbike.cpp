@@ -1,6 +1,7 @@
 #include <iostream>
 #include <regex>
 #include <iomanip>
+#include "Date.h"
 #include "Motorbike.h"
 using namespace std;
 
@@ -16,14 +17,26 @@ Motorbike::Motorbike(string brand, string model, string color,
       engineSize(engineSize), yearMade(yearMade) {}
 
 void Motorbike::insertMotorbike()
-{
+{   string yearMadeStr;
     regex engineSizeFormat("^[1-9]\\d{0,3}[cC]{2}$");
     cout << "Enter bike's brand: ";
     getline(cin, brand);
+    while (brand.empty()){
+        cout << "Brand cannot be empty. Enter again: ";
+        getline(cin, brand);
+    }
     cout << "Enter bike's model: ";
     getline(cin, model);
+    while (model.empty()){
+        cout << "Model cannot be empty. Enter again: ";
+        getline(cin, model);
+    }
     cout << "Enter bike's color: ";
     getline(cin, color);
+    while (color.empty()){
+        cout << "Color cannot be empty. Enter again: ";
+        getline(cin, color);
+    }
 
     cout << "Enter bike's license plate (format: XXCA or AC or MDX, letter+X) XXX.XX for example 51K3659.54): ";
     cin >> licensePlate;
@@ -44,7 +57,14 @@ void Motorbike::insertMotorbike()
     }
 
     cout << "Enter year made: ";
-    cin >> yearMade;
+    cin >> yearMadeStr;
+    Date today;
+    while (true){
+        if (stoi(yearMadeStr) <= today.today().getDate(3) && stoi(yearMadeStr) > 2000 ) break;
+        cout << "The yead made of the bike has to be from 2000 until the current year" << endl;
+        cout << "Please enter again: "; cin >> yearMadeStr;
+    }
+    yearMade = stoi(yearMadeStr);
     cin.ignore();
 }
 
@@ -66,7 +86,7 @@ string Motorbike::showMotorbike()
 }
 
 void Motorbike::editMotorbike(){
-    string choiceStr;
+    string choiceStr, yearMadeStr;
     cout << "What do you want to update: " << endl;
     cout << "1. Brand" << endl;
     cout << "2. Model" << endl;
@@ -119,7 +139,14 @@ void Motorbike::editMotorbike(){
     } 
     else if (choice == 5) {
         cout << "Enter new year made: ";
-        cin >> yearMade;
+        cin >> yearMadeStr;
+        Date today;
+        while (true){
+            if (stoi(yearMadeStr) <= today.today().getDate(3) && stoi(yearMadeStr) > 2000 ) break;
+            cout << "The yead made of the bike has to be from 2000 until the current year" << endl;
+            cout << "Please enter again: "; cin >> yearMadeStr;
+        }
+        yearMade = stoi(yearMadeStr);
     } 
     else if (choice == 6) {
         cout << "Enter new license plate (format: XXCA or AC or MDX, letter+X) XXX.XX for example 51K3659.54): ";

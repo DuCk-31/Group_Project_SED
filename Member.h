@@ -29,14 +29,13 @@ class Member{
     string renterName, ownerName, password;
     int creditPoints;
     bool status; // 1 is busy 0 is free
-    bool verifyStatus;
 
 
     public:
 
     Member(PersonalInfo info = PersonalInfo(), PersonalDoc doc = PersonalDoc(), Listing list = Listing(),
         string renterName= string(), string ownerName = string(), string password = string(), int status = -1,
-        Motorbike bike = Motorbike(), bool verifyStatus = 0);
+        Motorbike bike = Motorbike());
 
     Motorbike getBike();
     
@@ -66,7 +65,7 @@ class Member{
 
     bool checkRequest();
 
-    bool checkVerify();
+    bool verifyMember();
 
     void deductCPs(int totalPrice);
 
@@ -85,8 +84,6 @@ class Member{
     void rateMotobike(map <string, Member> &members);
 
     void rateRenter(map <string, Member> &members);
-
-    void verifyMember();
 
     void listmyBike();
 

@@ -28,7 +28,10 @@ string PersonalInfo::getInfo(int choice){
 void PersonalInfo::insertInfo(string username) {
     regex emailPattern("(^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$)");
     this->username = username;
-    cout << "Enter your full name: "; getline(cin, fullName);
+    cout << "Enter your full name: "; getline(cin, fullName); 
+    while (fullName.empty()){
+        cout << "Full name cannot be empty, please enter again: "; getline(cin, fullName);
+    }
     cout << "Enter your email: "; cin >> email;
     while (!regex_match(email, emailPattern)){
         cout << "The format for your email is invalidate" << endl;
@@ -55,6 +58,9 @@ void PersonalInfo::printInfo(){
 void PersonalInfo::editInfo(int choice){
     if (choice == 1) {
         cout << "Enter your new full name: "; getline(cin, fullName);
+        while (fullName.empty()){
+            cout << "Full name cannot be empty, please enter again: "; getline(cin, fullName);
+        }
         cout << "Your full name has been changed!!!" << endl;
     }
     else if (choice == 2) {

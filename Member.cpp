@@ -2,24 +2,25 @@
 #include <string>
 #include <iomanip>
 #include <ctime>
+#include <fstream>
 #include "Member.h"
 
 using namespace std;
 
-bool checkPassword(const string& password) {
+bool checkPassword(string password) {
     bool hasDigit = false, hasUpper = false, hasLower = false, hasSpecial = false;
     bool hasMinLength = password.length() >= 10;
 
-    for (unsigned char ch : password) {
+    for (char ch : password) {
         if (isalnum(ch)) {
             if (isalpha(ch)) {
-                if (isupper(ch)) hasUpper = true;
-                else if (islower(ch)) hasLower = true;
+                if (isupper(ch)) hasUpper = 1;
+                else if (islower(ch)) hasLower = 1;
             } else if (isdigit(ch)) {
-                hasDigit = true;
+                hasDigit = 1;
             }
         } else {
-            hasSpecial = true;
+            hasSpecial = 1;
         }
     }
 
@@ -33,10 +34,10 @@ bool checkPassword(const string& password) {
 }
 
 Member::Member(PersonalInfo info, PersonalDoc doc, Listing list,
-        string renterName, string ownerName, string password, int status, Motorbike bike, bool verifyStatus)
+        string renterName, string ownerName, string password, int status, Motorbike bike)
         :personalInfomation(info), personalDocument(doc), listBike(list),
         renterName(renterName), ownerName(ownerName), password(password), status(status),
-        bike(bike), verifyStatus(verifyStatus){}
+        bike(bike){}
 
 Motorbike Member::getBike(){
     return bike;
@@ -111,8 +112,70 @@ bool Member::checkRequest(){
     return renterRequest.size() != 0;
 }
 
-bool Member::checkVerify(){
-    return verifyStatus;
+bool Member::verifyMember() {
+    srand(time(0));  // seed random generator
+    string letters = "";
+    string digits = "";
+    // Generate 4 random letters
+    for (int i = 0; i < 4; i++) {
+        char c;
+        if (rand() % 2 == 0)
+            c = 'A' + rand() % 26;  // uppercase
+        else
+            c = 'a' + rand() % 26;  // lowercase
+        letters += c;
+    }
+    // Generate 4 random digits
+    for (int i = 0; i < 4; i++) {
+        char d = '0' + rand() % 10;
+        digits += d;
+    }
+    // Combine
+    string OTP = letters + digits;
+    string fileName = getName() + "CerfFile.dat";
+    // Write OTP to file
+    ofstream CerfFile(fileName);
+    CerfFile << OTP;
+    CerfFile.close();
+
+    cout << endl << "You have five attempts to enter the correct file (format: usernameCerfFile.dat)" << endl;
+    cout << "For example: Dang_KhoiCerfFile.dat, member1CerfFile.dat, etc." << endl;
+
+    string fileNameCheck;
+    int attempts = 5;
+
+    while (attempts > 0) {
+        cout << "Enter the file name: ";
+        cin >> fileNameCheck;
+
+        if (fileNameCheck == fileName) {
+            ifstream inFile(fileNameCheck);
+            string OTPCode;
+            inFile >> OTPCode;
+            inFile.close();
+
+            if (OTPCode == OTP) {
+                cout << "Verification successful!!!" << endl;
+                remove(fileName.c_str()); // delete file
+                return 1;
+            } else {
+                cout << "Wrong OTP inside the file!" << endl;
+            }
+        } else {
+            cout << "Wrong file name!!!" << endl;
+        }
+
+        attempts--;
+        if (attempts > 0) {
+            cout << "You have " << attempts << " attempts left." << endl;
+        }
+    }
+
+    cout << "Failed to verify your account: you entered the wrong code/file five times." << endl;
+
+    // Remove file after failure too
+    remove(fileName.c_str()); // delete file
+    return 0;
 }
 
 void Member::deductCPs(int totalPrice){
@@ -123,7 +186,7 @@ void Member::insertMember(string username){
     int checkBike;
     personalInfomation.insertInfo(username);
     personalDocument.insertDoc();
-    cout << "Do you want to register a bike?   1. Yes   2. No" << endl;
+    cout << "Do you want to register a bike?" << endl;
     cout << "1. Yes" << endl;
     cout << "2. No" << endl;
     cout << "Your choice: "; cin >> checkBike; cin.ignore();
@@ -160,8 +223,8 @@ void Member::sendRequest(map <string, Member> &members, string username, Date st
         cout << "You are sending a rental request for another member" << endl;
         return;
     }
-
-    members[username].renterRequest.insert({personalInfomation.getInfo(1), Rental(startDate, endDate, personalInfomation.getInfo(1), username, members[username].getBike(), 0, this->calculateRating())});
+    string renterName = personalInfomation.getInfo(1);
+    members[username].renterRequest.insert({renterName, Rental(startDate, endDate, renterName, username, members[username].getBike(), 0, this->calculateRating())});
     status = 1;
     cout << "Send request to " << username << endl;
 }
@@ -244,42 +307,6 @@ void Member::rateRenter(map <string, Member> &members){
     members[renterName].myRating.push_back(temp);
     members[renterName].changeStatus(0); //renter 100% free
     renterName = "N/A";
-}
-
-void Member::verifyMember(){
-
-    if (verifyStatus) {
-        cout << "Your account has been verified already" << endl;
-        return;
-    }
-    srand(time(0));  // seed random generator
-
-    string OTP = "";  // array to store 4 numbers
-
-    // generate, store, print numbers
-    cout << "OTP have sent to " << personalInfomation.getInfo(4) << endl;
-    cout << "Please do not share this code to anyone" << endl;
-    cout << "The code is: ";
-    for (int i = 0; i < 4; i++) {
-        OTP += to_string(rand() % 10); 
-    }
-    cout << OTP;
-    cout << endl;
-
-    string OTPCode;
-    cout << "You have five times to enter the correct code" << endl;
-    cout << "Enter the correct code: ";
-    cin >> OTPCode;
-    for (int i = 0; i < 5; i++){
-        if (OTPCode == OTP) 
-        {
-            cout << "Correct OTP code,  your account has been verified!!!" << endl;
-            verifyStatus = 1;
-            return;
-        }
-        cout << "Wrong OTP you have " << 5 - i << " times left, please enter again: "; cin >> OTPCode;
-    }
-    cout << "Fail to verify your account, you have entered wrong code for five times" << endl;
 }
 
 void Member::listmyBike(){
@@ -535,7 +562,7 @@ ostream& operator << (ostream& out, Member member){
     for (int i = 0; i < member.myRating.size(); i++){
         out << member.myRating[i];
     }
-    out << member.creditPoints << " " << member.status << " " << member.verifyStatus << endl;
+    out << member.creditPoints << " " << member.status << endl;
     return out;
 }
 
@@ -597,6 +624,6 @@ istream& operator >> (istream& in, Member &member){
         member.myRating.push_back(temp);
     }
 
-    in >> member.creditPoints >> member.status >> member.verifyStatus;
+    in >> member.creditPoints >> member.status;
     return in;
 }

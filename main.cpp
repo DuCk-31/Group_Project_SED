@@ -26,8 +26,10 @@ void memberRegister(map<string, Member> &members)
         getline(cin, usernameTemp);
     }
     temp.insertMember(usernameTemp);
+    if (!temp.verifyMember()) return;
     members.insert({temp.getName(), temp});
 }
+#if 1
 
 int main()
 {
@@ -148,42 +150,40 @@ int main()
         
         while (true)
         {   cout << endl
-            << "Account overview: " << usernameTemp << (members[usernameTemp].checkVerify()?"  (Verified)":"  (Unverified)") << endl;
-        cout << "---------------------------------------" << endl
+            << "Account overview: " << usernameTemp << "  (Verified)" << endl;
+            cout << "---------------------------------------" << endl
                 << endl;
 
-        cout << "Current Credit Points: " << members[usernameTemp].getCPs() << endl;
-        cout << "Renter rating: " << members[usernameTemp].calculateRating();
-        cout << "   Motobike rating: " << members[usernameTemp].calculateMotoRating();
-        cout << endl
-                << endl;
+            cout << "Current Credit Points: " << members[usernameTemp].getCPs() << endl;
+            cout << "Renter rating: " << members[usernameTemp].calculateRating();
+            cout << "   Motobike rating: " << members[usernameTemp].calculateMotoRating();
+            cout << endl
+                    << endl;
 
-        cout << "Your active rental booking" << endl;
-        cout << "---------------------------------------" << endl;
-        members[usernameTemp].showActive();
-        cout << endl
-                << endl;
+            cout << "Your active rental booking" << endl;
+            cout << "---------------------------------------" << endl;
+            members[usernameTemp].showActive();
+            cout << endl
+                    << endl;
 
-        cout << "Your active rental request" << endl;
-        cout << "---------------------------------------" << endl;
-        members[usernameTemp].showRequest();
+            cout << "Your active rental request" << endl;
+            cout << "---------------------------------------" << endl;
+            members[usernameTemp].showRequest();
 
-        cout << endl
-                << "This is your menu: " << endl;
-        cout << "1. Log out" << endl;
-        cout << "2. Update profile" << endl;
-        cout << "3. Change password" << endl;
-        cout << "4. Top up Credit Point" << endl;
-        cout << "5. Booking history" << endl;
-        cout << "6. List your motorbike" << endl;
-        cout << "7. Unlist your motorbike" << endl;
-        cout << "8. Search and send request for motorbike rental" << endl;
-        cout << "9. Accept the request" << endl;
-        cout << "10. Reject the request" << endl;
-        cout << "11. Return a motorbike" << endl;
-        cout << "12. Confirm motorbike return from renter" << endl;
-        cout << "13. Verify your account" << endl;
-
+            cout << endl
+                    << "This is your menu: " << endl;
+            cout << "1. Log out" << endl;
+            cout << "2. Update profile" << endl;
+            cout << "3. Change password" << endl;
+            cout << "4. Top up Credit Point" << endl;
+            cout << "5. Booking history" << endl;
+            cout << "6. List your motorbike" << endl;
+            cout << "7. Unlist your motorbike" << endl;
+            cout << "8. Search and send request for motorbike rental" << endl;
+            cout << "9. Accept the request" << endl;
+            cout << "10. Reject the request" << endl;
+            cout << "11. Return a motorbike" << endl;
+            cout << "12. Confirm motorbike return from renter" << endl;
             cout << "Enter your choice: ";
             cin >> functionChoice;
             cin.ignore();
@@ -364,9 +364,6 @@ int main()
             {
                 members[usernameTemp].rateRenter(members);
             }
-            else if (functionChoice == "13"){
-                members[usernameTemp].verifyMember();
-            }
             else
             {
                 cout << "Invalid option, please enter valid option" << endl;
@@ -390,3 +387,11 @@ int main()
     }
     myfile.close();
 }
+
+#endif
+
+#if 0
+int main(){
+}
+
+#endif

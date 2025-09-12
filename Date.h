@@ -13,6 +13,7 @@ public:
     int getDate(int choice);
     void insertDate();
     void showDate();
+    Date today();
 
     friend std::ostream& operator<<(std::ostream &out, Date d1);
     friend std::istream& operator>>(std::istream &in, Date &d1);

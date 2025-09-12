@@ -47,13 +47,17 @@ void PersonalDoc::insertDoc(){
     cout << "2. Passport" << endl;
     cout << "Your choice: "; cin >> typeStr;
     while (true){
-        if (typeStr == "1" || typeStr == "2") break;
+        if (typeStr == "1" || typeStr == "2" && !typeStr.empty()) break;
         cout << "Invalid selection!!! Please select the valid option" << endl;
         cout << "Select again: "; cin >> typeStr;
     }
     type = stoi(typeStr);
 
     cout << "Enter your ID number: "; cin >> idNumber;
+
+    while (idNumber.empty()){
+        cout << "Id number cannot be empty, please enter again: "; cin >> idNumber;
+    }
 
     if (type == 1) {  
         // Citizen ID validation
@@ -74,7 +78,7 @@ void PersonalDoc::insertDoc(){
     cout << "2. No" << endl;
     cout << "Your choice: "; cin >> licenseCheck;
     while (true){
-        if (licenseCheck == "1" || licenseCheck == "2") break;
+        if (licenseCheck == "1" || licenseCheck == "2" && !licenseCheck.empty()) break;
         cout << "Invalid selection!!! Please select the valid option" << endl;
         cout << "Select again: "; cin >> licenseCheck;
     }
@@ -94,7 +98,7 @@ void PersonalDoc::insertDoc(){
 }
 
 void PersonalDoc::printDoc(){
-    cout << (type==1?"Citizen Card: ":"Passport: ") << idNumber << endl;
+    cout << (type == 1?"Citizen Card: ":"Passport: ") << idNumber << endl;
     if (licenseNumber != 0){
         cout << "License number: " << licenseNumber;
         cout << "  Expiry date: "; expiryDate.showDate();
@@ -121,7 +125,7 @@ void PersonalDoc::editDoc(int choice){
         while (true){
             if (typeStr == "1" || typeStr == "2") break;
                 cout << "Invalid selection!!! Please select the valid option" << endl;
-                cout << "Select again: "; cin >> typeStr;
+                cout << "Select again: "; cin >> typeStr; 
         }
         type = stoi(typeStr);
 
