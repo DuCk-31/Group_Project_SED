@@ -171,7 +171,7 @@ bool Member::verifyMember() {
         }
     }
 
-    cout << "Failed to verify your account: you entered the wrong code/file five times." << endl;
+    cout << "Failed to verify whether you are human!!!" << endl;
 
     // Remove file after failure too
     remove(fileName.c_str()); // delete file

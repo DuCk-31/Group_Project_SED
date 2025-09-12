@@ -123,12 +123,30 @@ int main()
         while (members.count(usernameTemp) == 0)
         {
             wrongTimes++;
-            cout << "Wrong username, please enter again: ";
+            cout << "Cannot find username, please enter again: ";
             getline(cin, usernameTemp);
 
             if (wrongTimes == 5)
-            {
+            {   string choice;
                 cout << "You enter wrong username for so many times" << endl;
+                cout << "Do you want to register?" << endl;
+                cout << "1. Yes" << endl;
+                cout << "2. No" << endl;
+                cout << "Your choice: "; cin >> choice; cin.ignore();
+                if (choice == "2") return 1;
+                else if (choice == "1"){
+                    memberRegister(members);
+                }
+                else {
+                    cout << "Invalid option!!!" <<endl;
+                    return 1;
+                }
+                myfile.open("MemberData.dat", ios::out | ios::trunc);
+                for (pair<string, Member> member : members)
+                {
+                myfile << member.second;
+                }
+                myfile.close();
                 return 1;
             }
         }
