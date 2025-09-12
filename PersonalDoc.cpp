@@ -2,6 +2,18 @@
 #include "PersonalDoc.h"
 using namespace std;
 
+bool checkPassportNumber(string passport) {
+    // Format: 1 uppercase letter followed by 7 digits (e.g., B1234567)
+    if (passport.length() != 8) return 0;
+    if (!isalpha(passport[0]) || !isupper(passport[0])) return 0;
+
+    for (int i = 1; i < passport.length(); i++) {
+        if (!isdigit(passport[i])) return 0;
+    }
+
+    return 1;
+}
+
 bool checkIDNumber(string idNumber){
     bool checkLength = 1, checkDigit = 1;
     if (idNumber.length() != 12){
@@ -34,22 +46,34 @@ void PersonalDoc::insertDoc(){
     cout << "1. Citizen ID" << endl;
     cout << "2. Passport" << endl;
     cout << "Your choice: "; cin >> typeStr;
-    while(true){
+    while (true){
         if (typeStr == "1" || typeStr == "2") break;
         cout << "Invalid selection!!! Please select the valid option" << endl;
         cout << "Select again: "; cin >> typeStr;
     }
     type = stoi(typeStr);
+
     cout << "Enter your ID number: "; cin >> idNumber;
-    while (!checkIDNumber(idNumber)) {
-        cout << "Please enter your ID number again: "; cin >> idNumber;
+
+    if (type == 1) {  
+        // Citizen ID validation
+        while (!checkIDNumber(idNumber)) {
+            cout << "Please enter your Citizen ID number again: "; cin >> idNumber;
+        }
+    } 
+    else if (type == 2) {  // Passport
+        while (!checkPassportNumber(idNumber)) {
+            cout << "Passport must be 1 uppercase letter followed by 7 digits (e.g., B1234567)" << endl;
+            cout << "Please enter your Passport number again: "; 
+            cin >> idNumber;
+        }
     }
 
     cout << "Do you have a license?" << endl;
     cout << "1. Yes" << endl;
     cout << "2. No" << endl;
     cout << "Your choice: "; cin >> licenseCheck;
-    while(true){
+    while (true){
         if (licenseCheck == "1" || licenseCheck == "2") break;
         cout << "Invalid selection!!! Please select the valid option" << endl;
         cout << "Select again: "; cin >> licenseCheck;
@@ -57,29 +81,28 @@ void PersonalDoc::insertDoc(){
     
     if (licenseCheck == "1"){
         cout << "Enter your license number: "; cin >> licenseNumber;
-        while(to_string(licenseNumber).length() != 12) {
+        while (to_string(licenseNumber).length() != 12 ) {
             cout << "The license number has to be 12 digits long and cannot start with 0" << endl;
             cout << "Please enter your license number again: "; cin >> licenseNumber;
         }
         cout << "Enter expiry date: "; expiryDate.insertDate();
     }
-    else if (licenseCheck == "2"){
+    else {
         licenseNumber = 0;
         expiryDate = Date();
     }
-    
 }
 
 void PersonalDoc::printDoc(){
-    cout << "=== Personal Document Information ===" << endl;
-    cout << (type == 1 ? "Citizen ID: " : "Passport: ") << idNumber << '\n';
-    cout << "License number: " 
-              << (licenseNumber == 0 ? "Not registered" : to_string(licenseNumber));
-    if (licenseNumber != 0) {
-        cout << "  License expiry date: ";
-        expiryDate.showDate();
+    cout << (type==1?"Citizen Card: ":"Passport: ") << idNumber << endl;
+    if (licenseNumber != 0){
+        cout << "License number: " << licenseNumber;
+        cout << "  Expiry date: "; expiryDate.showDate();
+        cout << endl;
     }
-    cout << '\n';
+    else {
+        cout << "License has not been registered!!!" << endl;
+    }
 }
 
 bool PersonalDoc::checkLicense(Date end){
@@ -90,22 +113,33 @@ bool PersonalDoc::checkLicense(Date end){
 
 void PersonalDoc::editDoc(int choice){
     if (choice == 4){
-        cout << "Select your personal document type:" << endl;
+        string typeStr;
+        cout << "Choose your personal document type:" << endl;
         cout << "1. Citizen ID" << endl;
         cout << "2. Passport" << endl;
-        cout << "Your choice: "; cin >> type;
-        while(true){
-            if (type == 1 || type == 2) break;
-            cout << "Invalid selection!!! Please select the valid option" << endl;
-            cout << "Select again: "; cin >> type;
+        cout << "Your choice: "; cin >> typeStr;
+        while (true){
+            if (typeStr == "1" || typeStr == "2") break;
+                cout << "Invalid selection!!! Please select the valid option" << endl;
+                cout << "Select again: "; cin >> typeStr;
         }
+        type = stoi(typeStr);
 
-        cout << "Enter your new ID number: "; cin >> idNumber;
-        while (idNumber.length() != 12){
-            cout << "The ID number has to be as long as 12 digits" << endl;
-            cout << "Please enter your ID number again: "; cin >> idNumber;
+        cout << "Enter your ID number: "; cin >> idNumber;
+
+        if (type == 1) {  
+            // Citizen ID validation
+            while (!checkIDNumber(idNumber)) {
+                cout << "Please enter your Citizen ID number again: "; cin >> idNumber;
+            }
+        } 
+        else if (type == 2) {  // Passport
+            while (!checkPassportNumber(idNumber)) {
+                cout << "Passport must be 1 uppercase letter followed by 7 digits (e.g., B1234567)" << endl;
+                cout << "Please enter your Passport number again: "; 
+                cin >> idNumber;
+            }
         }
-        
     }
     else if (choice == 5){
         cout << "Enter your new license number: "; cin >> licenseNumber;
