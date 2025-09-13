@@ -4,7 +4,9 @@
 using namespace std;
 
 bool isValid(vector<string> validOptions, string choice)
-{
+{   
+    if (choice == "!") return 1; //for the user to quit the function
+
     for (int i = 0; i < validOptions.size(); i++)
     {
         if (validOptions[i] == choice)
@@ -15,7 +17,7 @@ bool isValid(vector<string> validOptions, string choice)
 
 void memberRegister(map<string, Member> &members)
 {
-    string usernameTemp;
+    string usernameTemp; 
     Member temp;
     cout << "Enter your username: ";
     getline(cin, usernameTemp);
@@ -35,14 +37,14 @@ int main()
 {
     string choice;
     map<string, Member> members;
-    fstream myfile("MemberData.dat", ios::in);
-    if (!myfile)
+    fstream myfile("MemberData.dat", ios::in); 
+    if (!myfile) 
     {
         cerr << "Failed to open/create file" << endl;
         return 1;
     }
 
-    while (true)
+    while (true) // read all member's info from the file
     {
         Member temp;
         if (!(myfile >> temp))
@@ -61,14 +63,14 @@ int main()
          << "4041377, Tran Gia Khanh" << endl
          << "4019314, Bui Hoang Thai Hung" << endl;
 
-    cout << "Use the app as   1. Guest   2. Member   3. Admin" << endl;
+    cout << "Use the app as: " << endl;
     cout << "1. Guest" << endl;
     cout << "2. Member" << endl;
     cout << "3. Admin" << endl;
     cout << "Enter your choice: ";
     cin >> choice;
 
-    while (true)
+    while (true) //error handling
     {
         if (choice == "1" || choice == "2" || choice == "3")
             break;
@@ -79,20 +81,21 @@ int main()
 
     cin.ignore();
 
-    if (choice == "1")
+    if (choice == "1")  //guest mode
     {
         string checkRegister;
         for (pair<string, Member> member : members)
         {
             member.second.show2Guest();
         }
+        // ask if the guest want to register
         cout << "Do you want to register:" << endl;
         cout << "1. Yes" << endl;
         cout << "2. No" << endl;
         cout << "Your choice: ";
         cin >> checkRegister;
 
-        while (true)
+        while (true) //error handling
         {
             if (checkRegister == "1" || checkRegister == "2")
                 break;
@@ -102,7 +105,7 @@ int main()
 
         cin.ignore();
 
-        if (checkRegister == "1")
+        if (checkRegister == "1") //member register
         {
             memberRegister(members);
         }
@@ -118,15 +121,15 @@ int main()
         int wrongTimes = 0;
         string usernameTemp, passwordTemp;
         Member temp;
-        cout << "Enter your username: ";
+        cout << "Enter your username: "; 
         getline(cin, usernameTemp);
-        while (members.count(usernameTemp) == 0)
+        while (members.count(usernameTemp) == 0) //error handling
         {
             wrongTimes++;
             cout << "Cannot find username, please enter again: ";
             getline(cin, usernameTemp);
 
-            if (wrongTimes == 5)
+            if (wrongTimes == 5) // wrong username for 5 times, ask user to register
             {   string choice;
                 cout << "You enter wrong username for so many times" << endl;
                 cout << "Do you want to register?" << endl;
@@ -151,9 +154,9 @@ int main()
             }
         }
         wrongTimes = 0;
-        cout << "Enter your password: ";
+        cout << "Enter your password: "; // prompt ther user to enter password
         getline(cin, passwordTemp);
-        while (members[usernameTemp].verifiedPassword(passwordTemp) == 0)
+        while (members[usernameTemp].verifiedPassword(passwordTemp) == 0) // error handling
         {
             wrongTimes++;
             cout << "Wrong password, please enter password again: ";
@@ -166,7 +169,7 @@ int main()
         }
 
         
-        while (true)
+        while (true) // print dashboard
         {   cout << endl
             << "Account overview: " << usernameTemp << "  (Verified)" << endl;
             cout << "---------------------------------------" << endl
@@ -293,7 +296,9 @@ int main()
                 cin.ignore();
                 for (pair<string, Member> member : members)
                 {
-                    if (member.second.checkCondition(start, end, members[usernameTemp].calculateRating(), members[usernameTemp].getCPs(), location) == 1 && member.second.checkOverlap(start, end) == 0 && member.first != usernameTemp)
+                    if (member.second.checkCondition(start, end, members[usernameTemp].calculateRating(), members[usernameTemp].getCPs(), location) == 1 &&
+                     member.second.checkOverlap(start, end) == 0 &&
+                    member.first != usernameTemp)
                     {
                         if (!members[usernameTemp].checkLicense(end))
                         {
@@ -318,21 +323,29 @@ int main()
                     }
                 }
 
-                if (validOptions.empty())
+                if (validOptions.empty()) //if there is no option fit with the user's conditions
                 {
                     cout << "Cannot find motorbike which is fit with your condition!!!" << endl;
                 }
                 else
                 {
                     string choice;
+                    cout << "You can quit by enter '!'" << endl;
                     cout << "Enter the username of member you want to send request: ";
+
                     getline(cin, choice);
                     while (!isValid(validOptions, choice))
-                    {
+                    {   
                         cout << "Invalid option, please select again: ";
                         getline(cin, choice);
                     }
+
+                    if (choice == "!") { // quit function if user enter "!"
+                        continue;
+                    }  
+                    //send a request to another user
                     members[usernameTemp].sendRequest(members, choice, start, end, members[usernameTemp].calculateRating());
+                    //clear the valid options
                     validOptions.clear();
                 }
             }
@@ -349,7 +362,7 @@ int main()
                 cout << "Enter the name of renter you want to accept: ";
                 getline(cin, choice);
                 while (members[usernameTemp].validateOptions(choice) == 0)
-                {
+                {   
                     cout << "Invalid option, please enter again: ";
                     getline(cin, choice);
                 }

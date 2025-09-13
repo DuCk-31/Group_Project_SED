@@ -506,18 +506,22 @@ void Member::show2Admin(){
     cout << "Unavailable periods: " << endl;
     if (unavailablePeriod.size() == 0) cout << "N/A" << endl;
     for (UnavailablePeriod period : unavailablePeriod){
-            cout << period;
+            period.printPeriod();
         }
-        cout << endl << "Renter requests: " << endl;
+    cout << endl << "----------------------------------" << endl;
+    cout << endl << "Renter requests: " << endl;
     if (renterRequest.size() == 0) cout << "N/A" << endl;
     for (auto rental : renterRequest){
         rental.second.printInfo(0);
+        cout << endl;
         }
-        cout << endl << "Active rentals: " << endl;
+    cout << "----------------------------------" << endl;
+    cout << endl << "Active rentals: " << endl;
     if (activeRental.size() == 0) cout << "N/A" << endl;
     for (Rental rental : activeRental){
         rental.printInfo(1);
     }
+    cout << "----------------------------------" << endl;
     cout << endl << "Booking history: " << endl;
     if (history.size() == 0) cout << "N/A" << endl;
     for (Rental rental : history){

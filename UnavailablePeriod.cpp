@@ -10,6 +10,11 @@ bool UnavailablePeriod::isOverlap(Date s, Date e) {
     return true;
 }
 
+void UnavailablePeriod::printPeriod(){
+    start.showDate(); cout << " - "; end.showDate();
+}
+
+
 istream& operator>>(istream& in, UnavailablePeriod& period) {
     in >> period.start >> period.end;
     return in;

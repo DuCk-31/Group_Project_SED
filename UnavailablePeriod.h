@@ -13,6 +13,7 @@ public:
     UnavailablePeriod(Date s = Date(), Date e = Date());
 
     bool isOverlap(Date s, Date e);
+    void printPeriod();
 
     friend istream& operator>>(istream& in, UnavailablePeriod& period);
     friend ostream& operator<<(ostream& out, UnavailablePeriod period);
