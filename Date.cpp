@@ -1,21 +1,27 @@
 #include "Date.h"
 #include <iomanip>
 #include <cstdio>
+#include <sstream>
 #include <ctime>
 
 using namespace std;
 
-bool isValidDate(Date date) {
-    int day = date.getDate(1);
-    int month = date.getDate(2);
-    int year = date.getDate(3);
+bool isValidDate(string date) {
+    int day, month, year;
+    char slash1, slash2;
 
-    if (year < 0 || month < 1 || month > 12 || day < 1)
-        return 0;
+    stringstream ss(date);
+    ss >> day >> slash1 >> month >> slash2 >> year;
+
+    // Check parsing success & slashes
+    if (ss.fail() || slash1 != '/' || slash2 != '/') return false;
+
+    // Basic validity
+    if (year < 0 || month < 1 || month > 12 || day < 1) return false;
 
     int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    // Check for leap year
+    // Leap year adjustment
     if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
         daysInMonth[1] = 29;
 
@@ -33,12 +39,27 @@ int Date::getDate(int choice) {
 }
 
 void Date::insertDate() {
-    scanf("%d/%d/%d", &day, &month, &year);
-    while (!isValidDate(*this)) {
+    string dateTemp;
+    cin >> dateTemp;
+
+    // Keep asking until user enters valid date
+    while (!isValidDate(dateTemp)) {
         cout << "Invalid date. Please enter again (dd/mm/yyyy): ";
-        scanf("%d/%d/%d", &day, &month, &year);
+        cin >> dateTemp;
     }
-    
+
+    // Split by '/'
+    stringstream ss(dateTemp);
+    string part;
+
+    getline(ss, part, '/');  
+    day = stoi(part);
+
+    getline(ss, part, '/');  
+    month = stoi(part);
+
+    getline(ss, part, '/');  
+    year = stoi(part);
 }
 
 void Date::showDate() {
