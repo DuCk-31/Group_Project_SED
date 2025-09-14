@@ -15,8 +15,8 @@ public:
     void showDate();
     Date today();
 
-    friend std::ostream& operator<<(std::ostream &out, Date d1);
-    friend std::istream& operator>>(std::istream &in, Date &d1);
+    friend ostream& operator<<(ostream &out, Date d1);
+    friend istream& operator>>(istream &in, Date &d1);
 
     bool operator>(Date &anotherDate);
     double operator-(Date &date2);

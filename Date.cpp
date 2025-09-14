@@ -42,7 +42,7 @@ void Date::insertDate() {
 }
 
 void Date::showDate() {
-    std::cout << setw(2) << setfill('0') << right << day << "/"
+    cout << setw(2) << setfill('0') << right << day << "/"
               << setw(2) << setfill('0') << right << month << "/"
               << year;
 }
@@ -58,12 +58,12 @@ Date Date::today(){
     return Date(tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
 }
 
-std::ostream& operator<<(std::ostream &out, Date d1) {
+ostream& operator<<(ostream &out, Date d1) {
     out << d1.day << " " << d1.month << " " << d1.year;
     return out;
 }
 
-std::istream& operator>>(std::istream &in, Date &d1) {
+istream& operator>>(istream &in, Date &d1) {
     in >> d1.day >> d1.month >> d1.year;
     return in;
 }
