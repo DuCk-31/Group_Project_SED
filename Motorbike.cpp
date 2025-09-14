@@ -7,7 +7,7 @@ using namespace std;
 
 bool check_plateFormat(string licensePlate)
 {
-    regex platePattern(R"(^\d{2}(?:MD|AC|CA|[A-Z]{1,2}\d?)?\d{3,4}\.\d{2}$)");
+    regex platePattern(R"(^\d{2}(?:MD|AC|CA|TA|[A-Z]{1,2}\d?)?\d{3,4}\.\d{2}$)");
     return regex_match(licensePlate, platePattern);
 }
 
