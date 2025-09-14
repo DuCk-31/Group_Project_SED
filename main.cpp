@@ -82,7 +82,8 @@ int main()
     cin.ignore();
 
     if (choice == "1")  //guest mode
-    {
+    {   cout << endl << "You are in the guest mode" << endl << endl;
+        cout << "Listed motobike: " << endl; 
         string checkRegister;
         for (pair<string, Member> member : members)
         {

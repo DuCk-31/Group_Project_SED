@@ -361,8 +361,10 @@ void Member::showRequest(){
 
 void Member::show2Guest(){
     if (listBike.checkStatus()){
+        cout << endl;
         cout << bike.showMotorbike();
         cout << "Location: " << (listBike.checkLocation(1) == 1?"HCM":"Ha Noi") << endl;
+        cout << "-------------------------------------------" << endl;
     }
 }
 
