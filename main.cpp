@@ -4,6 +4,7 @@
 using namespace std;
 
 bool findMember(string username, map <string, Member> members){
+    if (username == "!") return 1; //quit the program
     for ( pair <string, Member> member : members){
         if (member.first == username) return 1;
     }
@@ -425,21 +426,21 @@ int main()
         }
         cout << endl;
 
-        cout << "Account overview: " << adminAccount << endl;
-        int order = 1;
-
-        cout << "Member account: " << endl;
-        for (pair <string, Member> member : members) {
-            cout << order << ". " << member.first << endl;
-            order++;
-        }
         while (true){
+            cout << "Account overview: " << adminAccount << endl;
+            int order = 1;
+
+            cout << "Member account: " << endl;
+            for (pair <string, Member> member : members) {
+                cout << order << ". " << member.first << endl;
+                order++;
+            }
             cout << "You can enter '!' to quit" << endl;
             cout << "Enter username of the member you want to watch: "; getline(cin, memberAccount);
-            if (memberAccount == "!") break;
             while (!findMember(memberAccount, members)){
                 cout << "Cannot find the account, please enter the member account again: "; getline(cin, memberAccount);
             }
+            if (memberAccount == "!") break;
             members[memberAccount].show2Admin();
         }
                     
