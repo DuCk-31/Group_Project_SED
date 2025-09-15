@@ -11,7 +11,7 @@ bool isValidDate(string date) {
     char slash1, slash2;
 
     stringstream ss(date);
-    ss >> day >> slash1 >> month >> slash2 >> year;
+    ss >> day >> slash1 >> month >> slash2 >> year; //split the date into day month year
 
     // Check parsing success & slashes
     if (ss.fail() || slash1 != '/' || slash2 != '/') return false;
@@ -31,16 +31,16 @@ bool isValidDate(string date) {
 Date::Date(int day, int month, int year)
     : day(day), month(month), year(year) {}
 
-int Date::getDate(int choice) {
-    if (choice == 1) return day;
+int Date::getDate(int choice) { //get the day/month/year
+    if (choice == 1) return day; 
     else if (choice == 2) return month;
     else if (choice == 3) return year;
     return -1;
 }
 
 void Date::insertDate() {
-    string dateTemp;
-    cin >> dateTemp;
+    string dateTemp;    
+    cin >> dateTemp;    
 
     // Keep asking until user enters valid date
     while (!isValidDate(dateTemp)) {
@@ -69,12 +69,12 @@ void Date::showDate() {
 }
 
 Date Date::today(){
-    time_t t = time(nullptr);
+    time_t t = time(nullptr); //get system time
     tm tm = {};
-    #if defined(_WIN32)
+    #if defined(_WIN32) //for winOS
         localtime_s(&tm, &t);
-    #else
-        localtime_r(&t, &tm);
+    #else //for LinuxOs & MacoOS
+        localtime_r(&t, &tm); 
     #endif
     return Date(tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
 }

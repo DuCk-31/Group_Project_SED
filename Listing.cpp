@@ -2,25 +2,51 @@
 #include "Listing.h"
 using namespace std;
 
+bool isValidNumber(const string& str) {
+    bool dotSeen = false;
+
+    if (str.empty()) return false;
+
+    for (size_t i = 0; i < str.size(); i++) {
+        if (str[i] == '.') {
+            if (dotSeen) return false; // more than one dot
+            dotSeen = true;
+        } else if (!isdigit(str[i])) {
+            return false; // not a digit or dot
+        }
+    }
+    return true;
+}
+
 Listing::Listing(bool status, float dailyPrice, int location, float ratingRequirement, Date startDate, Date endDate)
 :status(status), dailyPrice(dailyPrice), location(location), ratingRequirement(ratingRequirement), startDate(startDate), endDate(endDate){};
 
 void Listing::listMotorbike(){
-    string locationString;
+    string locationString, dailyPrice, ratingRequirement;
     cout << "Motorbike listing" << endl;
     cout << "Enter daily rental rate (in CP): "; cin >> dailyPrice;
+    while (!isValidNumber(dailyPrice)){ //error handling
+        cout << "Please enter the daily rental rate again (in CP) again: "; cin >> dailyPrice;
+    }
+    this->dailyPrice = stof(dailyPrice);
+    
     cout << "Enter location: 1. HCM   2.Ha Noi" << endl;
     cout << "Your choice: "; cin >> locationString;
-    while(true){
+    while(true){ //error handling
         if (locationString == "1" || locationString == "2") break;
         cout << "Invalid option, please select again: "; cin >> locationString;
     }
     location = stoi(locationString);
-    cout << "Enter minimum renter-rating: "; cin >> ratingRequirement;
-    while (ratingRequirement > 5 || ratingRequirement < 1){
-        cout << "Renter-rating has to be from 1 to 5" << endl;
-        cout << "Please enter again: "; cin >> ratingRequirement;
+
+    cout << "Enter minimum renter-rating (1.0 - 5.0): ";
+    cin >> ratingRequirement;
+    while (!isValidNumber(ratingRequirement) || stof(ratingRequirement) < 1.0 || stof(ratingRequirement) > 5.0) { //error handling
+        cout << "Renter-rating must be between 1.0 and 5.0" << endl;
+        cout << "Please enter again: ";
+        cin >> ratingRequirement;
     }
+    this->ratingRequirement = stof(ratingRequirement);
+
     cout << "Available period: " << endl;
     cout << "Enter start date: "; startDate.insertDate();
     cout << "Enter end date: "; endDate.insertDate();

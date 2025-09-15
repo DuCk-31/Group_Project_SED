@@ -39,7 +39,7 @@ void memberRegister(map<string, Member> &members)
     if (!temp.verifyMember()) return;
     members.insert({temp.getName(), temp});
 }
-#if 1
+
 
 int main()
 {
@@ -454,10 +454,3 @@ int main()
     myfile.close();
 }
 
-#endif
-
-#if 0
-int main(){
-}
-
-#endif
