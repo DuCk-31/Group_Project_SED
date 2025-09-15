@@ -3,6 +3,13 @@
 
 using namespace std;
 
+bool findMember(string username, map <string, Member> members){
+    for ( pair <string, Member> member : members){
+        if (member.first == username) return 1;
+    }
+    return 0;
+}
+
 bool isValid(vector<string> validOptions, string choice)
 {   
     if (choice == "!") return 1; //for the user to quit the function
@@ -404,12 +411,38 @@ int main()
     }
     else if (choice == "3")
     {   
+        map <string, string> admin;
+        string adminAccount, adminPassword, memberAccount;
+        admin.insert({"admin1", "Admin1@2025"});
+        admin.insert({"admin2", "Admin2@2025"});
+        cout << "Enter your admin account (admin1/admin2): "; getline(cin, adminAccount);
+        while (admin[adminAccount].empty()){
+            cout << "Wrong admin account, please enter admin1 or admin2: "; getline(cin, adminAccount); 
+        }
+        cout << "Enter password: "; getline(cin, adminPassword);
+        while (admin[adminAccount] != adminPassword){
+            cout << "Wrong password, please enter again: "; getline(cin, adminPassword);
+        }
         cout << endl;
-        for (pair<string, Member> member : members)
-        {
-            member.second.show2Admin();
-            cout << endl;
-        }               
+
+        cout << "Account overview: " << adminAccount << endl;
+        int order = 1;
+
+        cout << "Member account: " << endl;
+        for (pair <string, Member> member : members) {
+            cout << order << ". " << member.first << endl;
+            order++;
+        }
+        while (true){
+            cout << "You can enter '!' to quit" << endl;
+            cout << "Enter username of the member you want to watch: "; getline(cin, memberAccount);
+            if (memberAccount == "!") break;
+            while (!findMember(memberAccount, members)){
+                cout << "Cannot find the account, please enter the member account again: "; getline(cin, memberAccount);
+            }
+            members[memberAccount].show2Admin();
+        }
+                    
     }
 
     myfile.open("MemberData.dat", ios::out | ios::trunc);
