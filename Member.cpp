@@ -510,7 +510,7 @@ void Member::show2Admin(){
     for (UnavailablePeriod period : unavailablePeriod){
             period.printPeriod();
         }
-    cout << endl << "----------------------------------" << endl;
+    cout << "----------------------------------" << endl;
     cout << endl << "Renter requests: " << endl;
     if (renterRequest.size() == 0) cout << "N/A" << endl;
     for (auto rental : renterRequest){

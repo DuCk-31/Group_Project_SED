@@ -11,7 +11,7 @@ bool UnavailablePeriod::isOverlap(Date s, Date e) {
 }
 
 void UnavailablePeriod::printPeriod(){
-    start.showDate(); cout << " - "; end.showDate();
+    start.showDate(); cout << " - "; end.showDate(); cout << endl;
 }
 
 
