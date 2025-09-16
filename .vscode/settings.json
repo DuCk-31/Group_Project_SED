@@ -2,6 +2,8 @@
     "files.associations": {
         "iostream": "cpp",
         "istream": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "regex": "cpp",
+        "sstream": "cpp"
     }
 }
