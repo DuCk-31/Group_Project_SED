@@ -353,6 +353,7 @@ void Member::showRequest(){
         return;
     }
 
+    cout << fixed << setprecision(1);
     cout << setw(25) << left << "Rental Period"  << right << "|" << setw(15) << left << "Renter Rating"  << right << "|" << "Username" << endl;
     for (auto request : renterRequest){
         request.second.show2Owner();

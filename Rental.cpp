@@ -24,7 +24,7 @@ void Rental::changeStatus(bool status){
 
 void Rental::show2Owner(){
     startDate.showDate(); cout << " - "; endDate.showDate();
-    cout << "  |" << setw(15) << setfill(' ') << left << renterRating << right << "|" << renterName << endl;
+    cout << "  |" << setw(15) << setfill(' ') << left << fixed << setprecision(1) << renterRating << right << "|" << renterName << endl;
 }
 
 void Rental::show2Renter(){

@@ -1,5 +1,6 @@
 #include "Member.h"
 #include <fstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -185,6 +186,7 @@ int main()
                 << endl;
 
             cout << "Current Credit Points: " << members[usernameTemp].getCPs() << endl;
+            cout << fixed << setprecision(1);
             cout << "Renter rating: " << members[usernameTemp].calculateRating();
             cout << "   Motobike rating: " << members[usernameTemp].calculateMotoRating();
             cout << endl

@@ -3,13 +3,13 @@
 
 using namespace std;
 
-Rating::Rating(int stars, string name, string comment)
+Rating::Rating(float stars, string name, string comment)
 :stars(stars), raterName(name), comment(comment) {};
 
 void Rating::rateObj(string username){
         cout << "Star(s) (1-5): "; cin >> stars;
         while (true){
-            if (stars < 6 && stars > 0) break;
+            if (stars <= 5.0 && stars >= 1.0) break;
             cout << "Enter the star(s) from 1 to 5" << endl;
             cout << "Enter again: "; cin >> stars;
         }
@@ -24,7 +24,7 @@ void Rating::showRating(){
         cout << "Comment: " << comment << endl;
     }
 
-int Rating::getStars(){
+float Rating::getStars(){
     return stars;
 }
 

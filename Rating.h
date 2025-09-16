@@ -6,19 +6,19 @@ using namespace std;
 
 
 class Rating{
-    int stars;
+    float stars;
     string raterName;
     string comment;
 
     public:
 
-    Rating(int stars = -1, string name = string(), string comment = string());
+    Rating(float stars = -1.0, string name = string(), string comment = string());
 
     void rateObj(string username);
 
     void showRating();
 
-    int getStars();
+    float getStars();
 
     friend ostream& operator << (ostream& out, Rating rating);
     friend istream& operator >> (istream& in, Rating &rating);
