@@ -1,11 +1,12 @@
-#include <iostream>
-#include "Listing.h"
-using namespace std;
+#include <iostream> // For input/output operations
+#include "Listing.h" // Include the Listing class definition
+using namespace std; // Use the standard namespace
 
+// Function to check if a string is a valid number (digits, at most one dot)
 bool isValidNumber(const string& str) {
     bool dotSeen = false;
 
-    if (str.empty()) return false;
+    if (str.empty()) return false; // Empty string is not valid
 
     for (size_t i = 0; i < str.size(); i++) {
         if (str[i] == '.') {
@@ -18,9 +19,11 @@ bool isValidNumber(const string& str) {
     return true;
 }
 
+// Constructor for Listing class, initializes all member variables
 Listing::Listing(bool status, float dailyPrice, int location, float ratingRequirement, Date startDate, Date endDate)
 :status(status), dailyPrice(dailyPrice), location(location), ratingRequirement(ratingRequirement), startDate(startDate), endDate(endDate){};
 
+// Method to list a motorbike for rent
 void Listing::listMotorbike(){
     string locationString, dailyPrice, ratingRequirement;
     cout << "Motorbike listing" << endl;
@@ -59,10 +62,12 @@ void Listing::listMotorbike(){
     status = true;
 }
 
+// Method to unlist a motorbike (reset listing)
 void Listing::unlistMotorbike(){
     *this = Listing();
 }
 
+// Method to print all listing information
 void Listing::printInfo()  {
     cout << "=== Listing Information ===\n";
     cout << "Status             : " << (status ? "Listed" : "Unlisted") << "\n";
@@ -89,33 +94,41 @@ void Listing::printInfo()  {
     cout << "\n";
 }
 
+// Method to check if the listing is active
 bool Listing::checkStatus(){
     return status;
 }
 
+// Method to check if a renter meets the rating requirement
 bool Listing::checkRequirement(float renterRating){
     return renterRating >= ratingRequirement;
 }
 
+// Method to check if the requested period is available
 bool Listing::checkAvailable(Date start, Date end){
     if (start - startDate >= 0 && endDate - end >= 0) return 1;
     return 0;
 }
 
+// Method to check if the location matches
 bool Listing::checkLocation(int location){
     return location == this->location;
 }
 
+// Method to calculate the total price for a given number of days
 float Listing::calculateTotal(int days){
     return dailyPrice*days;
 }
 
+// Overload output operator to write Listing object to output stream
 ostream& operator << (ostream &out, Listing listing){
 out << listing.status << " " << listing.dailyPrice << " " 
     << listing.location << " " << listing.ratingRequirement
     << " " << listing.startDate << " " << listing.endDate << endl;
     return out;
 }
+
+// Overload input operator to read Listing object from input stream
 istream& operator >> (istream &in, Listing &listing){
     in >> listing.status >> listing.dailyPrice >> listing.location;
     in >> listing.ratingRequirement >> listing.startDate >> listing.endDate;

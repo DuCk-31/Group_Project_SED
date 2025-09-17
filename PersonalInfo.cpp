@@ -4,6 +4,7 @@
 
 using namespace std;
 
+
 bool checkPhonenum(string phoneNumber){
     regex domesticPattern("^(0[35789][0-9]{8})$");
     regex internationalPattern("^\\+84[35789][0-9]{8}$");

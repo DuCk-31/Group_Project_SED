@@ -5,17 +5,20 @@
 #include "Motorbike.h"
 using namespace std;
 
+// Function to check if the license plate format is valid using regex
 bool check_plateFormat(string licensePlate)
 {
     regex platePattern(R"(^\d{2}(?:MD|AC|CA|TA|[A-Z]{1,2}\d?)?\d{3,4}\.\d{2}$)");
     return regex_match(licensePlate, platePattern);
 }
 
+// Constructor for Motorbike class, initializes all member variables
 Motorbike::Motorbike(string brand, string model, string color,
                      string licensePlate, string engineSize, int yearMade)
     : brand(brand), model(model), color(color), licensePlate(licensePlate),
       engineSize(engineSize), yearMade(yearMade) {}
 
+// Method to insert a new motorbike's information
 void Motorbike::insertMotorbike()
 {   string yearMadeStr;
     regex engineSizeFormat("^[1-9]\\d{0,3}[cC]{2}$");
@@ -68,11 +71,13 @@ void Motorbike::insertMotorbike()
     cin.ignore();
 }
 
+// Method to check if the engine size is greater than 50cc
 bool Motorbike::checkSize()
 {
     return stoi(engineSize.substr(0, engineSize.length() - 2)) > 50;
 }
 
+// Method to check if the motorbike exists (licensePlate not "N/A")
 bool Motorbike::checkExist()
 {
     if (licensePlate != "N/A")
@@ -80,11 +85,13 @@ bool Motorbike::checkExist()
     return 0;
 }
 
+// Method to return a string with motorbike's brand, model, and engine size
 string Motorbike::showMotorbike()
 {
     return brand + " " + model + "  Engine size: " + engineSize + "\n";
 }
 
+// Method to edit motorbike information based on user choice
 void Motorbike::editMotorbike(){
     string choiceStr, yearMadeStr;
     cout << "What do you want to update: " << endl;
@@ -159,6 +166,7 @@ void Motorbike::editMotorbike(){
     }
 }
 
+// Method to print all motorbike information
 void Motorbike::printInfo() {
     cout << "=== Motorbike Information ===\n";
     cout << "Brand        : " << brand        << "\n";
@@ -169,6 +177,7 @@ void Motorbike::printInfo() {
     cout << "Year Made    : " << yearMade     << "\n";
 }
 
+// Method to show motorbike info to the renter in a formatted table row
 void Motorbike::show2Renter(Date startDate, Date endDate, string ownerName, bool status)
 {
     cout << left << setw(23) << "Rental period" << " |";
@@ -192,6 +201,7 @@ void Motorbike::show2Renter(Date startDate, Date endDate, string ownerName, bool
     cout << (status == 1 ? "Accepted" : "Rejected") << endl;
 }
 
+// Overload output operator to write Motorbike object to output stream
 ostream &operator<<(ostream &out, Motorbike bike)
 {
     out << bike.brand << endl;
@@ -201,6 +211,7 @@ ostream &operator<<(ostream &out, Motorbike bike)
     return out;
 }
 
+// Overload input operator to read Motorbike object from input stream
 istream &operator>>(istream &in, Motorbike &bike)
 {
     getline(in >> ws, bike.brand);

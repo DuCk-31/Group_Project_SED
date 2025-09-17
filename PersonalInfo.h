@@ -1,5 +1,4 @@
 #include <iostream>
-//#include "Member.h"
 using namespace std;
 
 #ifndef PERSONAL_INFO_H

@@ -1,11 +1,12 @@
-#include "Date.h"
-#include <iomanip>
-#include <cstdio>
-#include <sstream>
-#include <ctime>
+#include "Date.h"      // Include the Date class definition
+#include <iomanip>     // For output formatting (setw, setfill)
+#include <cstdio>      // For C-style I/O (not used here, but included)
+#include <sstream>     // For stringstream (parsing date strings)
+#include <ctime>       // For time functions (current date)
 
 using namespace std;
 
+// Function to check if a date string is valid (format: dd/mm/yyyy)
 bool isValidDate(string date) {
     int day, month, year;
     char slash1, slash2;
@@ -28,9 +29,11 @@ bool isValidDate(string date) {
     return day <= daysInMonth[month - 1];
 }
 
+// Constructor for Date class, initializes day, month, year
 Date::Date(int day, int month, int year)
     : day(day), month(month), year(year) {}
 
+// Method to get the day/month/year based on choice (1=day, 2=month, 3=year)
 int Date::getDate(int choice) { //get the day/month/year
     if (choice == 1) return day; 
     else if (choice == 2) return month;
@@ -38,6 +41,7 @@ int Date::getDate(int choice) { //get the day/month/year
     return -1;
 }
 
+// Method to prompt user to enter a valid date and set the Date object
 void Date::insertDate() {
     string dateTemp;    
     cin >> dateTemp;    
@@ -62,12 +66,14 @@ void Date::insertDate() {
     year = stoi(part);
 }
 
+// Method to display the date in dd/mm/yyyy format
 void Date::showDate() {
     cout << setw(2) << setfill('0') << right << day << "/"
               << setw(2) << setfill('0') << right << month << "/"
               << year;
 }
 
+// Static method to get today's date as a Date object
 Date Date::today(){
     time_t t = time(nullptr); //get system time
     tm tm = {};
@@ -79,16 +85,19 @@ Date Date::today(){
     return Date(tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
 }
 
+// Overload output operator to write Date to output stream
 ostream& operator<<(ostream &out, Date d1) {
     out << d1.day << " " << d1.month << " " << d1.year;
     return out;
 }
 
+// Overload input operator to read Date from input stream
 istream& operator>>(istream &in, Date &d1) {
     in >> d1.day >> d1.month >> d1.year;
     return in;
 }
 
+// Overload > operator to compare two Date objects
 bool Date::operator>(Date &anotherDate) {
     if (year > anotherDate.getDate(3)) return true;
     else if (year == anotherDate.getDate(3)) {
@@ -99,6 +108,7 @@ bool Date::operator>(Date &anotherDate) {
     return false;
 }
 
+// Overload - operator to calculate the difference in days between two Date objects
 double Date::operator-(Date &date2) {
     tm t_start = {};
     tm t_end = {};

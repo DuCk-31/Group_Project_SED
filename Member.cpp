@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// Function to check if a password meets security requirements
 bool checkPassword(string password) {
     bool hasDigit = false, hasUpper = false, hasLower = false, hasSpecial = false;
     bool hasMinLength = password.length() >= 10;
@@ -33,24 +34,29 @@ bool checkPassword(string password) {
     return hasMinLength && hasLower && hasUpper && hasDigit && hasSpecial;
 }
 
+// Constructor for Member class, initializes all member variables
 Member::Member(PersonalInfo info, PersonalDoc doc, Listing list,
         string renterName, string ownerName, string password, int status, Motorbike bike)
         :personalInfomation(info), personalDocument(doc), listBike(list),
         renterName(renterName), ownerName(ownerName), password(password), status(status),
         bike(bike){}
 
+// Method to get the member's motorbike
 Motorbike Member::getBike(){
     return bike;
 }
 
+// Method to get the member's name
 string Member::getName(){
     return personalInfomation.getInfo(1);
 }
 
+// Method to get the member's credit points
 int Member::getCPs(){
     return creditPoints;
 }
 
+// Method to calculate the average rating of the member
 float Member::calculateRating(){
     int sum = 0;
     for (int i = 0; i < myRating.size(); i++){
@@ -59,6 +65,7 @@ float Member::calculateRating(){
     return (float)sum/myRating.size();
 }
 
+// Method to calculate the average rating of the member's motorbike
 float Member::calculateMotoRating(){
     if (motorbikeRating.size() == 0) return 0.0;
     int sum = 0;
@@ -68,10 +75,12 @@ float Member::calculateMotoRating(){
     return (float)sum/motorbikeRating.size();
 }
 
+// Method to verify if the given password matches the member's password
 bool Member::verifiedPassword(string password){
     return password == this->password;
 }
 
+// Method to check if all rental conditions are met
 bool Member::checkCondition(Date start, Date end, float renterRating, int CPs, int location){
         if (listBike.checkStatus() == 0) return 0;
         if (!listBike.checkRequirement(renterRating)) return 0;
@@ -81,10 +90,12 @@ bool Member::checkCondition(Date start, Date end, float renterRating, int CPs, i
         return 1;
     }
 
+// Method to check if the license is valid at a given date
 bool Member::checkLicense(Date end){
         return personalDocument.checkLicense(end);
     }
 
+// Method to check if a given period overlaps with any unavailable period
 bool Member::checkOverlap(Date start, Date end){   
     for (UnavailablePeriod period : unavailablePeriod){
         if (period.isOverlap(start, end)) return 1;
@@ -92,26 +103,32 @@ bool Member::checkOverlap(Date start, Date end){
     return 0;
 }
 
+// Method to check if the member is currently returning a bike
 bool Member::isReturn(){
         return ownerName == "N/A";
     }
 
+// Method to check if the member has returned the bike
 bool Member::checkReturn(){
     return renterName == "N/A";
 }
 
+// Method to validate if a renter request exists for a given renter name
 bool Member::validateOptions(string renterName){
     return renterRequest.count(renterName) != 0;
 }
 
+// Method to check if the bike is listed
 bool Member::checkListStatus(){
     return listBike.checkStatus();
 }
 
+// Method to check if there are any renter requests
 bool Member::checkRequest(){
     return renterRequest.size() != 0;
 }
 
+// Method to verify the member using a file-based OTP system
 bool Member::verifyMember() {
     srand(time(0));  // seed random generator
     string letters = "";
@@ -178,10 +195,12 @@ bool Member::verifyMember() {
     return 0;
 }
 
+// Method to deduct credit points from the member
 void Member::deductCPs(int totalPrice){
     this->creditPoints = this->creditPoints - totalPrice;
 }
 
+// Method to insert a new member's information
 void Member::insertMember(string username){
     int checkBike;
     personalInfomation.insertInfo(username);
@@ -210,14 +229,17 @@ void Member::insertMember(string username){
     ownerName = "N/A";
 }
 
+// Method to change the member's status (busy/free)
 void Member::changeStatus(bool status){
     this->status = status;
 }
 
+// Method to add an owner name to the member
 void Member::addOwner(string ownerName){
     this->ownerName = ownerName;
 }
 
+// Method to send a rental request to another member
 void Member::sendRequest(map <string, Member> &members, string username, Date startDate, Date endDate, float renterRating){
     if (status == 1) {
         cout << "You are sending a rental request for another member" << endl;
@@ -229,6 +251,7 @@ void Member::sendRequest(map <string, Member> &members, string username, Date st
     cout << "Send request to " << username << endl;
 }
 
+// Method to accept a rental request from a renter
 void Member::acceptRequest(map <string, Member> &members, string renterName){
     //accept the request
     int totalPrice;
@@ -266,6 +289,7 @@ void Member::acceptRequest(map <string, Member> &members, string renterName){
     renterRequest.erase(renterName);
 }
 
+// Method to reject a rental request from a renter
 void Member::rejectRequest(map <string, Member> &members, string renterName){
     renterRequest[renterName].changeStatus(0);
     members[renterName].changeStatus(0);
@@ -273,6 +297,7 @@ void Member::rejectRequest(map <string, Member> &members, string renterName){
     renterRequest.erase(renterName);
 }
 
+// Method to rate a motorbike after rental
 void Member::rateMotobike(map <string, Member> &members){
 
     if (ownerName == "N/A"){
@@ -288,6 +313,7 @@ void Member::rateMotobike(map <string, Member> &members){
     ownerName = "N/A";
 }
 
+// Method to rate a renter after rental
 void Member::rateRenter(map <string, Member> &members){
 
     if (renterName == "N/A") {
@@ -309,6 +335,7 @@ void Member::rateRenter(map <string, Member> &members){
     renterName = "N/A";
 }
 
+// Method to list the member's bike
 void Member::listmyBike(){
     if (listBike.checkStatus()){
         cout << "Your bike has already been listed" << endl;
@@ -317,6 +344,7 @@ void Member::listmyBike(){
     listBike.listMotorbike();
 }
 
+// Method to unlist the member's bike
 void Member::unlistmyBike(){
     if (renterName != "N/A"){
         cout << "Your bike is being rented, you cannot unlist your bike" << endl;
@@ -325,6 +353,7 @@ void Member::unlistmyBike(){
     listBike.unlistMotorbike();
 }
 
+// Method to show the member's rental history
 void Member::showHistory(){
     if (history.size() == 0) {
         cout << "You have not sent any request" << endl;
@@ -339,6 +368,7 @@ void Member::showHistory(){
     cout << endl;
 }
 
+// Method to show the member's active rental
 void Member::showActive(){
     if (activeRental.size() == 0) {
         cout << "No active rental" << endl;
@@ -347,6 +377,7 @@ void Member::showActive(){
     activeRental[0].show2Renter();
 }
 
+// Method to show all rental requests for the member's bike
 void Member::showRequest(){
     if (renterRequest.size() == 0) {
         cout << "No active request at the moment" << endl;
@@ -360,6 +391,7 @@ void Member::showRequest(){
     }
 }
 
+// Method to show the member's bike to guests if listed
 void Member::show2Guest(){
     if (listBike.checkStatus()){
         cout << endl;
@@ -369,6 +401,7 @@ void Member::show2Guest(){
     }
 }
 
+// Method to show all ratings for the member's motorbike
 void Member::showMotoRating(){
     if (motorbikeRating.size() == 0){
         cout << "No rating at the moment" << endl;
@@ -381,6 +414,7 @@ void Member::showMotoRating(){
     }
 }
 
+// Method to edit the member's profile
 void Member::editProfile(){
     int choice;
     cout << "What do you want to update" << endl;
@@ -418,8 +452,13 @@ void Member::editProfile(){
         }
     }
     else if (choice == 7){
+
+
         if (this->renterName != "N/A" || this->listBike.checkStatus() == 1) {
             cout << "Your bike are being rented or listed, cannot be modified" << endl;
+        }
+        else if (!bike.checkExist()){
+            cout << "You have not registered a bike yet" << endl;
         }
         else {
             bike.editMotorbike();
@@ -448,6 +487,7 @@ void Member::editProfile(){
     }
 }
 
+// Method to change the member's password
 void Member::changePassword(){
     string oldPassword;
     int wrongPassword;
@@ -474,6 +514,7 @@ void Member::changePassword(){
     }
 }
 
+// Method to top up the member's credit points
 void Member::topupCPs(){
     int CPs, wrongPassword = 0; string currentPassword; 
     cout << "Enter password to top up credit points: "; getline(cin, currentPassword);
@@ -496,6 +537,7 @@ void Member::topupCPs(){
     cout << "Top up successfuly, now you are having " << creditPoints << " Credit Point(s)" << endl;
 }
 
+// Method to show all member information to the admin
 void Member::show2Admin(){
     cout << "=== Member Information ===" << endl;
     cout << "Member rating: " << calculateRating() << endl;
@@ -533,6 +575,7 @@ void Member::show2Admin(){
     cout << endl << "=========================" << endl;
 }
 
+// Overload output operator to write Member object to output stream
 ostream& operator << (ostream& out, Member member){
     out << member.password << endl;
     out << member.personalInfomation << member.personalDocument << member.listBike;
@@ -573,6 +616,7 @@ ostream& operator << (ostream& out, Member member){
     return out;
 }
 
+// Overload input operator to read Member object from input stream
 istream& operator >> (istream& in, Member &member){
     int size;
     getline(in >> ws, member.password);

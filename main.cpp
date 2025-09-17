@@ -1,17 +1,19 @@
-#include "Member.h"
-#include <fstream>
-#include <iomanip>
+#include "Member.h"      // Include the Member class and related definitions
+#include <fstream>       // For file input/output operations
+#include <iomanip>       // For output formatting (setw, setfill, setprecision)
 
-using namespace std;
+using namespace std;     // Use the standard namespace
 
+// Function to check if a username exists in the members map
 bool findMember(string username, map <string, Member> members){
     if (username == "!") return 1; //quit the program
     for ( pair <string, Member> member : members){
-        if (member.first == username) return 1;
+        if (member.first == username) return 1; // Found the username
     }
-    return 0;
+    return 0; // Not found
 }
 
+// Function to check if a choice is valid (exists in validOptions vector)
 bool isValid(vector<string> validOptions, string choice)
 {   
     if (choice == "!") return 1; //for the user to quit the function
@@ -19,11 +21,12 @@ bool isValid(vector<string> validOptions, string choice)
     for (int i = 0; i < validOptions.size(); i++)
     {
         if (validOptions[i] == choice)
-            return 1;
+            return 1; // Found valid option
     }
-    return 0;
+    return 0; // Not found
 }
 
+// Function to register a new member
 void memberRegister(map<string, Member> &members)
 {
     string usernameTemp; 
@@ -36,11 +39,10 @@ void memberRegister(map<string, Member> &members)
         cout << "Please enter another username: ";
         getline(cin, usernameTemp);
     }
-    temp.insertMember(usernameTemp);
-    if (!temp.verifyMember()) return;
-    members.insert({temp.getName(), temp});
+    temp.insertMember(usernameTemp); // Insert member info
+    if (!temp.verifyMember()) return; // OTP verification
+    members.insert({temp.getName(), temp}); // Add to members map
 }
-
 
 int main()
 {
@@ -62,6 +64,7 @@ int main()
     }
     myfile.close();
 
+    // Print welcome and group info
     cout << "EEET2482/EEET2653/COSC2082/COSC2721(Delete whichever is not needed) GROUP PROJECT" << endl
          << "Semester 2 2025" << endl
          << "E-MOTORBIKE RENTAL APPLICATION" << endl
@@ -96,7 +99,7 @@ int main()
         string checkRegister;
         for (pair<string, Member> member : members)
         {
-            member.second.show2Guest();
+            member.second.show2Guest(); // Show listed bikes to guest
         }
         // ask if the guest want to register
         cout << "Do you want to register:" << endl;
