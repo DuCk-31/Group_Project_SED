@@ -65,7 +65,7 @@ int main()
     myfile.close();
 
     // Print welcome and group info
-    cout << "EEET2482/EEET2653/COSC2082/COSC2721(Delete whichever is not needed) GROUP PROJECT" << endl
+    cout << "EEET2482/EEET2653/COSC2082/COSC2721 GROUP PROJECT" << endl
          << "Semester 2 2025" << endl
          << "E-MOTORBIKE RENTAL APPLICATION" << endl
          << "Instructor: Dr Ling Huo Chong, Dr Ushik Shrestha, Dr Tri Huynh" << endl
